@@ -20,4 +20,5 @@ public static class Constant
         { 6f, 6f, 20f, 8f },
         { 3.5f, 3.2f, 8f, 9f }
     };
+
 }
