@@ -21,7 +21,7 @@ public static class Constant
         { 3.5f, 3.2f, 8f, 9f }
     };
 
-    public static float ecoStarRadius = 6.255f;
+    public static float ecoStarRadius = 5.008f;
     public static float surroundAngleSpeed = 25;
     public static float stopSurroundDelayTime = 1;
     public static float afterStopKeepVelocityDelay = 1;
