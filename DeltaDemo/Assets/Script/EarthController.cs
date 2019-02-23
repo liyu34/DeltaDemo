@@ -47,18 +47,18 @@ public class EarthController : MonoBehaviour
         if (dirY == -1)
         {
             // go down
-            _verticalVelocity = -_Curve(-posY / _mapBound);
+            _verticalVelocity = -_Curve(-posY / mapBound);
         }
         else if (dirY == 0)
         {
             // go center
             int a = posY > 0 ? 1 : -1;
-            _verticalVelocity = -a * _Curve((_mapBound - a * posY) / _mapBound);
+            _verticalVelocity = -a * _Curve((mapBound - a * posY) / mapBound);
         }
         else if (dirY == 1)
         {
             // go up
-            _verticalVelocity = _Curve(posY / _mapBound);
+            _verticalVelocity = _Curve(posY / mapBound);
         }
     }
 
@@ -75,6 +75,8 @@ public class EarthController : MonoBehaviour
     }
 
     public AnimationCurve _curve;
+    public float xBound = -10f;
+    public float mapBound = 8.5f;
     public float HorizontalVelocity
     {
         get
@@ -86,5 +88,4 @@ public class EarthController : MonoBehaviour
     private float _horizontalVelocity;
     private float _verticalVelocity;
     private float _accelerationCoefficient = 0.01f;
-    private float _mapBound = 8.5f;
 }
