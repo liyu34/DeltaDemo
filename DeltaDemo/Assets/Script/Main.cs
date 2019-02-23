@@ -10,6 +10,16 @@ public class Main : MonoBehaviour
     public float spawnWait;
     public Vector3 spawnRange;
 
+    public EarthController earthController;
+    public PlanetMove planetMove;
+    public BackgroundScroller bgRemote;
+    public BackgroundScroller bgNear;
+
+    private float earthVelocity
+    {
+        get => earthController.HorizontalVelocity;
+    }
+
     void Start()
     {
         StartCoroutine(SpawnPlanets());
@@ -17,7 +27,7 @@ public class Main : MonoBehaviour
 
     void Update()
     {
-        
+        planetMove.speed = -earthVelocity;
     }
 
     IEnumerator SpawnPlanets()
