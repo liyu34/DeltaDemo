@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6270033776445461275}
   - component: {fileID: 290697652160613189}
-  - component: {fileID: 4008448111433372369}
+  - component: {fileID: 4445910560753416428}
   m_Layer: 0
   m_Name: ecostar 04
   m_TagString: EcoStar
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!135 &4008448111433372369
+--- !u!135 &4445910560753416428
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,5 +91,5 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 2.355
+  m_Radius: 6.255
   m_Center: {x: 0, y: 0, z: 0}
