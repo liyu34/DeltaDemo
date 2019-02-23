@@ -10,13 +10,11 @@ public class Main : MonoBehaviour
     public float spawnWait;
     public Vector3 spawnRange;
 
-    // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(SpawnPlanets());
-    }
+    }   
 
-    // Update is called once per frame
     void Update()
     {
         
