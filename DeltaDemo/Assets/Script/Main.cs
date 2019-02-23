@@ -111,16 +111,15 @@ public class Main : MonoBehaviour
             {
                 float distOffset = Random.Range(0f, 1f) + Constant.maxDistance[type, lastType];
                 float y = Random.Range(-spawnRange.y, spawnRange.y);
-                if (y - lastLocalPosition.y >= distOffset)
+                float xOffset;
+                if (Mathf.Abs(y - lastLocalPosition.y) >= distOffset)
                 {
-                    y = lastLocalPosition.y + distOffset - 0.1f * distOffset;
+                    xOffset = Random.Range(0f, 2f);
                 }
-                else if (lastLocalPosition.y - y >= distOffset)
+                else
                 {
-                    y = lastLocalPosition.y - distOffset + 0.1f * distOffset;
+                    xOffset = Mathf.Sqrt(distOffset * distOffset - (y - lastLocalPosition.y) * (y - lastLocalPosition.y));
                 }
-
-                float xOffset = Mathf.Sqrt(distOffset * distOffset - (y - lastLocalPosition.y) * (y - lastLocalPosition.y));
                 planet.transform.localPosition = new Vector3(lastLocalPosition.x + xOffset, y, lastLocalPosition.z);
             }
 

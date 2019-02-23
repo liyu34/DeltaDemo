@@ -10108,11 +10108,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e518d0b4cd7cd5e42a7db6ef482d114f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalNum: 15
-  planetNum: 10
-  resourceNum: 2
-  blackholeNum: 1
-  ecostarNum: 2
+  totalNum: 75
+  planetNum: 50
+  resourceNum: 20
+  blackholeNum: 2
+  ecostarNum: 3
   spawnWait: 5
   spawnRange: {x: 20, y: 9, z: 5}
   meteorolitePrefabs:
