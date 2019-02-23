@@ -413,7 +413,7 @@ GameObject:
   - component: {fileID: 706576543}
   - component: {fileID: 706576544}
   m_Layer: 0
-  m_Name: NPCRoot
+  m_Name: NodeRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -432,7 +432,7 @@ Transform:
   m_Children:
   - {fileID: 1276974928}
   m_Father: {fileID: 1228643683}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &706576544
 MonoBehaviour:
@@ -641,6 +641,7 @@ Transform:
   - {fileID: 519420032}
   - {fileID: 706576543}
   - {fileID: 495286853}
+  - {fileID: 1046301780}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -674,8 +675,8 @@ Transform:
   m_LocalScale: {x: 40, y: 20, z: 1}
   m_Children:
   - {fileID: 1110226717}
-  m_Father: {fileID: 1228643683}
-  m_RootOrder: 2
+  m_Father: {fileID: 706576543}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1276974929
 MeshRenderer:
@@ -722,17 +723,3 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276974927}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1276974931
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1276974927}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b8513901270b144ba465d5d8ba326dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scrollSpeed: 0
-  widthSize: 0
