@@ -27,7 +27,7 @@ public static class Constant
     public static float surroundAngleSpeed = 25;
     public static float stopSurroundDelayTime = 1;
     public static float afterStopKeepVelocityDelay = 1;
-    public static float afterStopVelocity = 6;
+    public static float afterStopHorizontalVelocity = 6;
     public static float maxHorizontalVelocity = 4.5f;
     public static float overMaxHVelocityDecreaseDelta = 1f;
 }

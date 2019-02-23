@@ -32,6 +32,7 @@ public class EarthController : MonoBehaviour
         if (_afterStopKeepVelocityDelay > 0)
         {
             _afterStopKeepVelocityDelay -= deltaTime;
+            _CalcVelocity(new Vector2(0, _afterStopKeepVerticalDirection));
             _SetEarthPosition();
             _SetFlame();
             return;
@@ -45,10 +46,10 @@ public class EarthController : MonoBehaviour
                 _CrashStar(_surroundingStar);
                 _afterStopKeepVelocityDelay = Constant.afterStopKeepVelocityDelay;
                 Vector3 dir = _earthTransform.position - _surroundCenter;
-                dir.Normalize();
-                dir *= Constant.afterStopVelocity;
-                _horizontalVelocity = dir.x;
-                _verticalVelocity = dir.y;
+                int a = dir.x > 0 ? 1 : -1;
+                _horizontalVelocity = a * Constant.afterStopHorizontalVelocity;
+                _afterStopKeepVerticalDirection = dir.y > 0 ? 1 : -1;
+                _CalcVelocity(new Vector2(0, _afterStopKeepVerticalDirection));
             }
             return;
         }
@@ -153,6 +154,7 @@ public class EarthController : MonoBehaviour
             int a = newPos.y > 0 ? 1 : -1;
             _verticalVelocity = 0;
             newPos.y = mapBound * a;
+            _afterStopKeepVelocityDelay = -1;
         }
         _earthTransform.position = newPos;
     }
@@ -323,6 +325,7 @@ public class EarthController : MonoBehaviour
     private List<GameObject> _planetsCache;
     private float _stopSurroundDelay = 0;
     private float _afterStopKeepVelocityDelay = 0;
+    private int _afterStopKeepVerticalDirection = 1;
     private GameObject _surroundingStar;
     private bool _surroundState = false;
     private float _surroundAngle;
