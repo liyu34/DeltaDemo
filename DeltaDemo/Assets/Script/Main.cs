@@ -15,8 +15,8 @@ public class Main : MonoBehaviour
     public BackgroundScroller bgRemote;
     public BackgroundScroller bgNear;
 
-    private float bgRemoteRatio = 0.6f;
-    private float bgNearRatio = 0.3f;
+    private float bgRemoteRatio = 0.3f;
+    private float bgNearRatio = 0.6f;
 
     private float earthVelocity
     {
