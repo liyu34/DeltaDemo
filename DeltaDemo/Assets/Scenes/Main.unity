@@ -573,6 +573,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e518d0b4cd7cd5e42a7db6ef482d114f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  planetRoot: {fileID: 706576542}
+  planetPrefabs: []
 --- !u!4 &1228643683
 Transform:
   m_ObjectHideFlags: 0

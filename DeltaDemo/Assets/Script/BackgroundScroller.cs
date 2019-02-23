@@ -10,6 +10,7 @@ public class BackgroundScroller : MonoBehaviour
     public float widthSize = 40;
 
     private Vector3 startPosition;
+    private float lastPositionOffset = 0f;
     
     void Start()
     {
@@ -18,7 +19,8 @@ public class BackgroundScroller : MonoBehaviour
 
     void Update()
     {
-        float newPosition = Mathf.Repeat(Time.time * scrollSpeed, widthSize);
-        transform.position = startPosition + Vector3.right * newPosition;
+        float newPositionOffset = Mathf.Repeat(Time.deltaTime * scrollSpeed + lastPositionOffset, widthSize);
+        transform.position = startPosition + Vector3.right * newPositionOffset;
+        lastPositionOffset = newPositionOffset;
     }
 }
