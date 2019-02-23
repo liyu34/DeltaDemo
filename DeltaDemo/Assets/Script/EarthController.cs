@@ -8,6 +8,7 @@ public class EarthController : MonoBehaviour
     void Start()
     {
         _earth = GetComponent<Rigidbody2D>();
+        _earthTransform = GetComponent<Transform>();
     }
 
     // Update is called once per frame
@@ -19,31 +20,47 @@ public class EarthController : MonoBehaviour
 
     private Vector2 _HandleInput()
     {
-        Vector2 acceleration = Vector2.zero;
+        Vector2 direction = Vector2.zero;
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            acceleration += Vector2.up;
+            direction += Vector2.up;
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            acceleration += Vector2.down;
+            direction += Vector2.down;
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            acceleration += Vector2.left;
+            direction += Vector2.left;
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            acceleration += Vector2.right;
+            direction += Vector2.right;
         }
-        return acceleration;
+        return direction;
     }
 
-    private void _CalcVelocity(Vector2 acceleration)
+    private void _CalcVelocity(Vector2 direction)
     {
-        acceleration *= _accelrationCoefficient;
-        _verticalVelocity += acceleration.y;
-        _horizontalVelocity += acceleration.x;
+        _horizontalVelocity += direction.x * _accelerationCoefficient;
+        float dirY = direction.y;// [-1, 0, 1]
+        float posY = _earthTransform.position.y;
+        if (dirY == -1)
+        {
+            // go down
+            _verticalVelocity = -_Curve(-posY / _mapBound);
+        }
+        else if (dirY == 0)
+        {
+            // go center
+            int a = posY > 0 ? 1 : -1;
+            _verticalVelocity = -a * _Curve((_mapBound - a * posY) / _mapBound);
+        }
+        else if (dirY == 1)
+        {
+            // go up
+            _verticalVelocity = _Curve(posY / _mapBound);
+        }
     }
 
     private void _SetEarthVelocity()
@@ -52,8 +69,16 @@ public class EarthController : MonoBehaviour
         _earth.velocity = new Vector2(useHorizontalV ? _horizontalVelocity : 0, _verticalVelocity);
     }
 
+    private float _Curve(float value)
+    {
+        return _curve.Evaluate(value);
+    }
+
+    public AnimationCurve _curve;
     private Rigidbody2D _earth;
-    private float _verticalVelocity;
+    private Transform _earthTransform;
     private float _horizontalVelocity;
-    private float _accelrationCoefficient = 0.01f;
+    private float _verticalVelocity;
+    private float _accelerationCoefficient = 0.01f;
+    private float _mapBound = 8.5f;
 }
