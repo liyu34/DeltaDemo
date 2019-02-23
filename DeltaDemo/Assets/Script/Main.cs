@@ -26,13 +26,22 @@ public class Main : MonoBehaviour
     void Start()
     {
         StartCoroutine(SpawnPlanets());
-    }   
+    }
 
     void Update()
     {
-        planetMove.speed = earthVelocity;
-        bgRemote.scrollSpeed = -earthVelocity * bgRemoteRatio;
-        bgNear.scrollSpeed = -earthVelocity * bgNearRatio;
+        if (earthVelocity <= 0)
+        {
+            planetMove.speed = 0;
+            bgRemote.scrollSpeed = 0;
+            bgNear.scrollSpeed = 0;
+        }
+        else
+        {
+            planetMove.speed = earthVelocity;
+            bgRemote.scrollSpeed = -earthVelocity * bgRemoteRatio;
+            bgNear.scrollSpeed = -earthVelocity * bgNearRatio;
+        }
     }
 
     IEnumerator SpawnPlanets()
