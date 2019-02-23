@@ -14,6 +14,7 @@ public class EarthController : MonoBehaviour
     void Start()
     {
         _crashPlanetTempl = GameObject.Find("CrashPlanet");
+        _crashPlanetTempl.SetActive(false);
         _crashedPlanets = new List<CrashedPlanet>();
         _planetsCache = new List<GameObject>();
         _earthTransform = GetComponent<Transform>();
@@ -144,9 +145,6 @@ public class EarthController : MonoBehaviour
             go.transform.SetParent(_earthTransform);
         }
         go.transform.position = planet.transform.position;
-        Vector3 v = planet.transform.position - _earthTransform.position;
-        float angle = Vector3.Angle(Vector3.right, v);
-        go.transform.rotation = Quaternion.Euler(angle, 0, 0);
         ParticleSystem particle = go.GetComponent<ParticleSystem>();
         CrashedPlanet crashedPlanet = new CrashedPlanet
         {
@@ -154,6 +152,7 @@ public class EarthController : MonoBehaviour
             go = go
         };
         _crashedPlanets.Add(crashedPlanet);
+        go.SetActive(true);
         particle.Play();
     }
 
