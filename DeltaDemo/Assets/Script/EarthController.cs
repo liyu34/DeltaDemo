@@ -71,6 +71,11 @@ public class EarthController : MonoBehaviour
         }
     }
 
+    public float GetEarthPosX()
+    {
+        return _earthTransform.position.x;
+    }
+
     public void SetEarthPosX(float x)
     {
         _earthTransform.position = new Vector3(x, _earthTransform.position.y, _earthTransform.position.z);
