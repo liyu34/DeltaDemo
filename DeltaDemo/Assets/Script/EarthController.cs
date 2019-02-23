@@ -64,7 +64,8 @@ public class EarthController : MonoBehaviour
 
     private void _SetEarthVelocity()
     {
-        bool useHorizontalV = true;
+        float posX = _earthTransform.position.x;
+        bool useHorizontalV = (posX >= xBound && _horizontalVelocity >= 0) ? false : true;
         Vector3 velocity = new Vector3(useHorizontalV ? _horizontalVelocity : 0, _verticalVelocity, 0);
         _earthTransform.position += velocity;
     }
