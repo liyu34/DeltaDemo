@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+struct CrashedPlanet
+{
+    public float lifeTime;
+    public GameObject go;
+}
+
 public class EarthController : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -14,9 +20,32 @@ public class EarthController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _CalcVelocity(_HandleInput());
-        _SetEarthPosition();
-        _setFlame();
+        if (_surroundState)
+        {
+            _Surrounding();
+        }
+        else
+        {
+            _CalcVelocity(_HandleInput());
+            _SetFlame();
+            _SetEarthPosition();
+        }
+        float deltaTime = Time.deltaTime;
+        for (int i = _crashedPlanets.Count; i >= 0; i--)
+        {
+            CrashedPlanet temp = new CrashedPlanet
+            {
+                lifeTime = _crashedPlanets[i].lifeTime - deltaTime
+            };
+            if (temp.lifeTime <= 0)
+            {
+                _planetsCache.Add(_crashedPlanets[i].go);
+                _crashedPlanets.RemoveAt(i);
+                continue;
+            }
+            temp.go = _crashedPlanets[i].go;
+            _crashedPlanets[i] = temp;
+        }
     }
 
     private Vector2 _HandleInput()
@@ -37,6 +66,13 @@ public class EarthController : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             direction += Vector2.right;
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            if (_surroundState)
+            {
+                _stopSurround();
+            }
         }
         return direction;
     }
@@ -90,7 +126,23 @@ public class EarthController : MonoBehaviour
         }
     }
 
-    private void _setFlame()
+    private GameObject _spawnCrashedPlanet(GameObject planet)
+    {
+        if (_planetsCache.Count > 0)
+        {
+            GameObject go = _planetsCache[1];
+            _planetsCache.RemoveAt(1);
+            return go;
+        }
+        GameObject p = new GameObject();
+        p.transform.SetParent(_earthTransform);
+        p.transform.position = planet.transform.position;
+        p.AddComponent<ParticleSystem>();
+        ParticleSystem particle = p.GetComponent<ParticleSystem>();
+        return p;
+    }
+
+    private void _SetFlame()
     {
         float angle = 0;
         if (_verticalVelocity == 0 || HorizontalVelocity == 0)
@@ -109,13 +161,57 @@ public class EarthController : MonoBehaviour
             angle = Mathf.Atan2(_verticalVelocity, _horizontalVelocity) * 57.29f;
         }
         // y = -90 是固定的
-        _flame.transform.rotation = Quaternion.Euler(angle, -90, 0);
+        Quaternion rotation = Quaternion.Euler(angle, -90, 0);
 
         // 速度刺激火焰大小
         float speed = Mathf.Sqrt
             (_verticalVelocity * _verticalVelocity + _horizontalVelocity * _horizontalVelocity);
+        _setFlameParameter(rotation, speed);
+    }
+
+    private void _setFlameParameter(Quaternion rotation, float speed)
+    {
+        _flame.transform.rotation = rotation;
         float lifeTime = speed / maxFlameSpeed * maxFlameLifeTime + minFlameLifeTime;
         _flame.startLifetime = lifeTime;
+    }
+
+    private void _startSurround(float radius, float angleSpeed, Vector3 center)
+    {
+        _surroundRadius = radius;
+        _surroundAngleSpeed = angleSpeed;
+        Vector3 v = gameObject.transform.position - center;
+        _surroundAngle = Vector3.Angle(Vector3.left, v);
+        _surroundCenter = center;
+        _surroundState = true;
+        // 停止喷火
+        _flame.startLifetime = 0;
+    }
+
+    private void _Surrounding()
+    {
+        float deltaTime = Time.deltaTime;
+        _surroundAngle += _surroundAngleSpeed * deltaTime;
+        Vector3 newPos = _calcSurroundPos();
+        gameObject.transform.position = newPos;
+    }
+
+    private void _stopSurround()
+    {
+        _surroundState = false;
+        Vector3 leavePos = _calcSurroundPos();
+        Quaternion rotation = Quaternion.Euler(_surroundAngle, 0, 0);
+        _setFlameParameter(rotation, maxFlameSpeed);
+        Vector3 leaveVelocity = rotation * Vector3.right;
+        _horizontalVelocity = leaveVelocity.x;
+        _verticalVelocity = leaveVelocity.y;
+    }
+
+    private Vector3 _calcSurroundPos()
+    {
+        Vector3 v = Quaternion.Euler(_surroundAngle, 0, 0) * Vector3.left;
+        v.Normalize();
+        return v * _surroundRadius;
     }
 
     public AnimationCurve _curve;
@@ -131,6 +227,14 @@ public class EarthController : MonoBehaviour
             return _horizontalVelocity;
         }
     }
+
+    private List<CrashedPlanet> _crashedPlanets;
+    private List<GameObject> _planetsCache;
+    private bool _surroundState = false;
+    private float _surroundAngle;
+    private float _surroundRadius;
+    private float _surroundAngleSpeed;
+    private Vector3 _surroundCenter;
     private ParticleSystem _flame;
     private Transform _earthTransform;
     private float _horizontalVelocity;
