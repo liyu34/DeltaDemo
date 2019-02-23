@@ -48,6 +48,10 @@ public class EarthController : MonoBehaviour
                 Vector3 dir = _earthTransform.position - _surroundCenter;
                 int a = dir.x > 0 ? 1 : -1;
                 _horizontalVelocity = a * Constant.afterStopHorizontalVelocity;
+                if (_horizontalVelocity < 0)
+                {
+                    _horizontalVelocity = -1.5f;
+                }
                 _afterStopKeepVerticalDirection = dir.y > 0 ? 1 : -1;
                 _CalcVelocity(new Vector2(0, _afterStopKeepVerticalDirection));
             }
@@ -335,7 +339,7 @@ public class EarthController : MonoBehaviour
     private Vector3 _surroundCenter;
     private ParticleSystem _flame;
     private Transform _earthTransform;
-    private float _horizontalVelocity;
+    private float _horizontalVelocity = Constant.initialHorizontalVelocity;
     private float _verticalVelocity;
     private float _accelerationCoefficient = 0.01f;
 }
