@@ -202,7 +202,7 @@ public class EarthController : MonoBehaviour
         else
         {
             go = Instantiate(_crashPlanetTempl);
-            go.transform.SetParent(_earthTransform);
+            go.transform.SetParent(nodeRoot);
         }
         go.transform.position = planet.transform.position;
         ParticleSystem particle = go.GetComponent<ParticleSystem>();
@@ -312,6 +312,7 @@ public class EarthController : MonoBehaviour
     public float maxFlameSpeed = 3;
     public float maxFlameLifeTime = 0.2f;
     public float minFlameLifeTime = 0.05f;
+    public Transform nodeRoot;
     public float HorizontalVelocity
     {
         get

@@ -200,6 +200,7 @@ MonoBehaviour:
   maxFlameSpeed: 3
   maxFlameLifeTime: 0.2
   minFlameLifeTime: 0.05
+  nodeRoot: {fileID: 706576543}
 --- !u!135 &286940149
 SphereCollider:
   m_ObjectHideFlags: 0
