@@ -13,6 +13,9 @@ public class EarthController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _crashPlanetTempl = GameObject.Find("CrashPlanet");
+        _crashedPlanets = new List<CrashedPlanet>();
+        _planetsCache = new List<GameObject>();
         _earthTransform = GetComponent<Transform>();
         _flame = GetComponentInChildren<ParticleSystem>();
     }
@@ -31,7 +34,7 @@ public class EarthController : MonoBehaviour
             _SetEarthPosition();
         }
         float deltaTime = Time.deltaTime;
-        for (int i = _crashedPlanets.Count; i >= 0; i--)
+        for (int i = _crashedPlanets.Count - 1; i >= 0; i--) 
         {
             CrashedPlanet temp = new CrashedPlanet
             {
@@ -122,24 +125,36 @@ public class EarthController : MonoBehaviour
     {
         if (!other.isTrigger)
         {
+            _playCrashEffect(other.gameObject);
             Destroy(other.gameObject);
         }
     }
 
-    private GameObject _spawnCrashedPlanet(GameObject planet)
+    private void _playCrashEffect(GameObject planet)
     {
+        GameObject go;
         if (_planetsCache.Count > 0)
         {
-            GameObject go = _planetsCache[1];
-            _planetsCache.RemoveAt(1);
-            return go;
+            go = _planetsCache[0];
+            _planetsCache.RemoveAt(0);
         }
-        GameObject p = new GameObject();
-        p.transform.SetParent(_earthTransform);
-        p.transform.position = planet.transform.position;
-        p.AddComponent<ParticleSystem>();
-        ParticleSystem particle = p.GetComponent<ParticleSystem>();
-        return p;
+        else
+        {
+            go = Instantiate(_crashPlanetTempl);
+            go.transform.SetParent(_earthTransform);
+        }
+        go.transform.position = planet.transform.position;
+        Vector3 v = planet.transform.position - _earthTransform.position;
+        float angle = Vector3.Angle(Vector3.right, v);
+        go.transform.rotation = Quaternion.Euler(angle, 0, 0);
+        ParticleSystem particle = go.GetComponent<ParticleSystem>();
+        CrashedPlanet crashedPlanet = new CrashedPlanet
+        {
+            lifeTime = particle.main.duration,
+            go = go
+        };
+        _crashedPlanets.Add(crashedPlanet);
+        particle.Play();
     }
 
     private void _SetFlame()
@@ -228,6 +243,7 @@ public class EarthController : MonoBehaviour
         }
     }
 
+    private GameObject _crashPlanetTempl;
     private List<CrashedPlanet> _crashedPlanets;
     private List<GameObject> _planetsCache;
     private bool _surroundState = false;
