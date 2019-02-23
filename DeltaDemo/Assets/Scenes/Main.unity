@@ -10114,6 +10114,7 @@ MonoBehaviour:
   ecostarNum: 3
   spawnWait: 5
   spawnRange: {x: 20, y: 10, z: 5}
+  spawnRangeForEcostar: {x: 20, y: 5, z: 5}
   meteorolitePrefabs:
   - {fileID: 2731034470443544075, guid: a230db0177d70ca4a8196f9071e1fc44, type: 3}
   - {fileID: 2731034470443544075, guid: 4c76219865aaa1c4b9e1a950ec7c94a1, type: 3}
