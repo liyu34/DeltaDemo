@@ -26,6 +26,13 @@ public class EarthController : MonoBehaviour
     {
         if (_surroundState)
         {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                if (_surroundState)
+                {
+                    _stopSurround();
+                }
+            }
             _Surrounding();
         }
         else
@@ -70,13 +77,6 @@ public class EarthController : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             direction += Vector2.right;
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            if (_surroundState)
-            {
-                _stopSurround();
-            }
         }
         return direction;
     }
@@ -124,10 +124,22 @@ public class EarthController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (_surroundState)
+        {
+            return;
+        }
         if (!other.isTrigger)
         {
-            _playCrashEffect(other.gameObject);
-            Destroy(other.gameObject);
+            if (other.gameObject.tag == "EcoStar")
+            {
+                _startSurround(Constant.ecoStarRadius, Constant.surroundAngleSpeed,
+                    other.transform.position);
+            }
+            else
+            {
+                _playCrashEffect(other.gameObject);
+                Destroy(other.gameObject);
+            }
         }
     }
 
@@ -186,20 +198,34 @@ public class EarthController : MonoBehaviour
     private void _setFlameParameter(Quaternion rotation, float speed)
     {
         _flame.transform.rotation = rotation;
-        float lifeTime = speed / maxFlameSpeed * maxFlameLifeTime + minFlameLifeTime;
-        _flame.startLifetime = lifeTime;
+        if (Mathf.Abs(speed) <= 0.001)
+        {
+            _flame.gameObject.SetActive(false);
+        }
+        else
+        {
+            if(!_flame.gameObject.active)
+            {
+                _flame.gameObject.SetActive(true);
+            }
+            float lifeTime = speed / maxFlameSpeed * maxFlameLifeTime + minFlameLifeTime;
+            _flame.startLifetime = lifeTime;
+        }
     }
 
     private void _startSurround(float radius, float angleSpeed, Vector3 center)
     {
+        _horizontalVelocity = 0;
+        _verticalVelocity = 0;
         _surroundRadius = radius;
         _surroundAngleSpeed = angleSpeed;
         Vector3 v = gameObject.transform.position - center;
         _surroundAngle = Vector3.Angle(Vector3.left, v);
+        center.z = _earthTransform.position.z;
         _surroundCenter = center;
         _surroundState = true;
         // 停止喷火
-        _flame.startLifetime = 0;
+        _setFlameParameter(Quaternion.identity, 0);
     }
 
     private void _Surrounding()
@@ -214,7 +240,7 @@ public class EarthController : MonoBehaviour
     {
         _surroundState = false;
         Vector3 leavePos = _calcSurroundPos();
-        Quaternion rotation = Quaternion.Euler(_surroundAngle, 0, 0);
+        Quaternion rotation = Quaternion.Euler(0, 0, _surroundAngle);
         _setFlameParameter(rotation, maxFlameSpeed);
         Vector3 leaveVelocity = rotation * Vector3.right;
         _horizontalVelocity = leaveVelocity.x;
@@ -223,9 +249,9 @@ public class EarthController : MonoBehaviour
 
     private Vector3 _calcSurroundPos()
     {
-        Vector3 v = Quaternion.Euler(_surroundAngle, 0, 0) * Vector3.left;
-        v.Normalize();
-        return v * _surroundRadius;
+        Vector3 v = Quaternion.Euler(0, 0, _surroundAngle) * Vector3.left;
+        Vector3 res = v * _surroundRadius + _surroundCenter;
+        return res;
     }
 
     public AnimationCurve _curve;
