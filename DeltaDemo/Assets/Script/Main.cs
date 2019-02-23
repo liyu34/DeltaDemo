@@ -15,6 +15,9 @@ public class Main : MonoBehaviour
     public BackgroundScroller bgRemote;
     public BackgroundScroller bgNear;
 
+    private float bgRemoteRatio = 0.6f;
+    private float bgNearRatio = 0.3f;
+
     private float earthVelocity
     {
         get => earthController.HorizontalVelocity;
@@ -27,7 +30,9 @@ public class Main : MonoBehaviour
 
     void Update()
     {
-        planetMove.speed = -earthVelocity;
+        planetMove.speed = earthVelocity;
+        bgRemote.scrollSpeed = -earthVelocity * bgRemoteRatio;
+        bgNear.scrollSpeed = -earthVelocity * bgNearRatio;
     }
 
     IEnumerator SpawnPlanets()
