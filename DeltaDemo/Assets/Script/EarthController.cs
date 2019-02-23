@@ -24,6 +24,18 @@ public class EarthController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float deltaTime = Time.deltaTime;
+        if (_stopSurroundDelay > 0)
+        {
+            _stopSurroundDelay -= deltaTime;
+            if (_stopSurroundDelay <= 0)
+            {
+                _surroundState = false;
+                _CrashStar(_surroundingStar);
+                _horizontalVelocity = maxFlameSpeed;
+            }
+            return;
+        }
         if (_surroundState)
         {
             if (Input.GetKeyDown(KeyCode.X))
@@ -31,6 +43,7 @@ public class EarthController : MonoBehaviour
                 if (_surroundState)
                 {
                     _stopSurround();
+                    return;
                 }
             }
             _Surrounding();
@@ -41,7 +54,6 @@ public class EarthController : MonoBehaviour
             _SetFlame();
             _SetEarthPosition();
         }
-        float deltaTime = Time.deltaTime;
         for (int i = _crashedPlanets.Count - 1; i >= 0; i--) 
         {
             CrashedPlanet temp = new CrashedPlanet
@@ -57,6 +69,11 @@ public class EarthController : MonoBehaviour
             temp.go = _crashedPlanets[i].go;
             _crashedPlanets[i] = temp;
         }
+    }
+
+    public void SetEarthPosX(float x)
+    {
+        _earthTransform.position = new Vector3(x, _earthTransform.position.y, _earthTransform.position.z);
     }
 
     private Vector2 _HandleInput()
@@ -110,10 +127,6 @@ public class EarthController : MonoBehaviour
         bool useHorizontalV = (posX >= xBound && _horizontalVelocity >= 0) ? false : true;
         Vector3 velocity = new Vector3(useHorizontalV ? _horizontalVelocity : 0, _verticalVelocity, 0);
         Vector3 newPos = _earthTransform.position + velocity;
-        if (newPos.x > xBound)
-        {
-            newPos.x = xBound;
-        }
         _earthTransform.position = newPos;
     }
 
@@ -132,15 +145,21 @@ public class EarthController : MonoBehaviour
         {
             if (other.gameObject.tag == "EcoStar")
             {
+                _surroundingStar = other.gameObject;
                 _startSurround(Constant.ecoStarRadius, Constant.surroundAngleSpeed,
                     other.transform.position);
             }
             else
             {
-                _playCrashEffect(other.gameObject);
-                Destroy(other.gameObject);
+                _CrashStar(other.gameObject);
             }
         }
+    }
+
+    private void _CrashStar(GameObject planet)
+    {
+        _playCrashEffect(planet.gameObject);
+        Destroy(planet.gameObject);
     }
 
     private void _playCrashEffect(GameObject planet)
@@ -238,13 +257,16 @@ public class EarthController : MonoBehaviour
 
     private void _stopSurround()
     {
-        _surroundState = false;
-        Vector3 leavePos = _calcSurroundPos();
+        if (!_surroundState || _stopSurroundDelay > 0) 
+        {
+            return;
+        }
         Quaternion rotation = Quaternion.Euler(0, 0, _surroundAngle);
-        _setFlameParameter(rotation, maxFlameSpeed);
-        Vector3 leaveVelocity = rotation * Vector3.right;
-        _horizontalVelocity = leaveVelocity.x;
-        _verticalVelocity = leaveVelocity.y;
+        Vector3 to = _earthTransform.position - _surroundCenter;
+        to.z = 0;
+        Quaternion rota = Quaternion.FromToRotation(Vector3.right, to);
+        _setFlameParameter(rota, maxFlameSpeed);
+        _stopSurroundDelay = Constant.stopSurroundDelayTime;
     }
 
     private Vector3 _calcSurroundPos()
@@ -271,6 +293,8 @@ public class EarthController : MonoBehaviour
     private GameObject _crashPlanetTempl;
     private List<CrashedPlanet> _crashedPlanets;
     private List<GameObject> _planetsCache;
+    private float _stopSurroundDelay = 0;
+    private GameObject _surroundingStar;
     private bool _surroundState = false;
     private float _surroundAngle;
     private float _surroundRadius;
