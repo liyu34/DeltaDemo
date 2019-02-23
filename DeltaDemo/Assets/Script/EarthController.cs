@@ -25,6 +25,12 @@ public class EarthController : MonoBehaviour
     void Update()
     {
         float deltaTime = Time.deltaTime;
+        if (_afterStopKeepVelocityDelay > 0)
+        {
+            _afterStopKeepVelocityDelay -= deltaTime;
+            _SetEarthPosition();
+            return;
+        }
         if (_stopSurroundDelay > 0)
         {
             _stopSurroundDelay -= deltaTime;
@@ -32,7 +38,12 @@ public class EarthController : MonoBehaviour
             {
                 _surroundState = false;
                 _CrashStar(_surroundingStar);
-                _horizontalVelocity = maxFlameSpeed;
+                _afterStopKeepVelocityDelay = Constant.afterStopKeepVelocityDelay;
+                Vector3 dir = _earthTransform.position - _surroundCenter;
+                dir.Normalize();
+                dir *= Constant.afterStopVelocity;
+                _horizontalVelocity = dir.x;
+                _verticalVelocity = dir.y;
             }
             return;
         }
@@ -266,10 +277,11 @@ public class EarthController : MonoBehaviour
         {
             return;
         }
-        Quaternion rotation = Quaternion.Euler(0, 0, _surroundAngle);
         Vector3 to = _earthTransform.position - _surroundCenter;
-        to.z = 0;
-        Quaternion rota = Quaternion.FromToRotation(Vector3.right, to);
+        float hor = to.x;
+        float ver = to.y;
+        float angle = Mathf.Atan2(ver, hor) * 57.29f;
+        Quaternion rota = Quaternion.Euler(angle, -90, 0);
         _setFlameParameter(rota, maxFlameSpeed);
         _stopSurroundDelay = Constant.stopSurroundDelayTime;
     }
@@ -299,6 +311,7 @@ public class EarthController : MonoBehaviour
     private List<CrashedPlanet> _crashedPlanets;
     private List<GameObject> _planetsCache;
     private float _stopSurroundDelay = 0;
+    private float _afterStopKeepVelocityDelay = 0;
     private GameObject _surroundingStar;
     private bool _surroundState = false;
     private float _surroundAngle;
