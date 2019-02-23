@@ -6,17 +6,17 @@ public class Main : MonoBehaviour
 {
     public int totalNum;
     public int planetNum;
-    public int blackHoleNum;
+    public int resourceNum;
+    public int blackholeNum;
     public int ecostarNum;
-    public int cometNum;
 
     public float spawnWait;
     public Vector3 spawnRange;
 
-    public GameObject[] planetPrefabs;
-    public GameObject[] blackHolePrefabs;
+    public GameObject[] meteorolitePrefabs;
+    public GameObject[] resourcePrefabs;
+    public GameObject[] blackholePrefabs;
     public GameObject[] ecostarPrefabs;
-    public GameObject[] cometPrefabs;
 
     public GameObject planetRoot;
     public EarthController earthController;
@@ -38,10 +38,10 @@ public class Main : MonoBehaviour
     void Start()
     {
         maxNum = new int[Constant.PlanetType.count];
-        maxNum[Constant.PlanetType.planet] = planetNum;
-        maxNum[Constant.PlanetType.blackHole] = blackHoleNum;
+        maxNum[Constant.PlanetType.meteorolite] = planetNum;
+        maxNum[Constant.PlanetType.resource] = resourceNum;
+        maxNum[Constant.PlanetType.blackhole] = blackholeNum;
         maxNum[Constant.PlanetType.ecostar] = ecostarNum;
-        maxNum[Constant.PlanetType.comet] = cometNum;
         count = new int[Constant.PlanetType.count];
         SpawnPlanets();
     }
@@ -79,23 +79,23 @@ public class Main : MonoBehaviour
             }
             count[type]++;
 
-            GameObject prefab = planetPrefabs[0];
+            GameObject prefab = meteorolitePrefabs[0];
             Vector3 spawnPosition = new Vector3(spawnRange.x, 0, spawnRange.z);
             Quaternion spawnRotation;
             GameObject planet;
             switch (type)
             {
                 case (0):
-                    prefab = planetPrefabs[Random.Range(0, planetPrefabs.Length)];
+                    prefab = meteorolitePrefabs[Random.Range(0, meteorolitePrefabs.Length)];
                     break;
                 case (1):
-                    prefab = blackHolePrefabs[Random.Range(0, blackHolePrefabs.Length)];
+                    prefab = resourcePrefabs[Random.Range(0, resourcePrefabs.Length)];
                     break;
                 case (2):
-                    prefab = ecostarPrefabs[Random.Range(0, ecostarPrefabs.Length)];
+                    prefab = blackholePrefabs[Random.Range(0, blackholePrefabs.Length)];
                     break;
                 case (3):
-                    prefab = cometPrefabs[Random.Range(0, cometPrefabs.Length)];
+                    prefab = ecostarPrefabs[Random.Range(0, ecostarPrefabs.Length)];
                     break;
             }
             

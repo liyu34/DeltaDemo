@@ -10110,29 +10110,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalNum: 15
   planetNum: 10
-  blackHoleNum: 1
+  resourceNum: 2
+  blackholeNum: 1
   ecostarNum: 2
-  cometNum: 2
   spawnWait: 5
   spawnRange: {x: 20, y: 9, z: 5}
-  planetPrefabs:
-  - {fileID: 2731034470443544075, guid: 96c8d589399284241a537ffa877fdbce, type: 3}
-  - {fileID: 2731034470443544075, guid: 1aec0758317a707469b0121b7b3d008e, type: 3}
-  - {fileID: 2731034470443544075, guid: 50b6af68574be454aa98c1392e853a53, type: 3}
-  - {fileID: 2731034470443544075, guid: 708910c0045d8ab48b039a4f34a8824a, type: 3}
-  - {fileID: 2731034470443544075, guid: 3509d2a8bd4dc5540ab95d5db442243b, type: 3}
-  - {fileID: 2731034470443544075, guid: 6ce6888b961e28048a55d0339532fbdd, type: 3}
-  - {fileID: 2731034470443544075, guid: a58a0c437aea6be4c97a3bc53ec47890, type: 3}
-  - {fileID: 2731034470443544075, guid: 963188292dd8bca499ab96481b231bdb, type: 3}
-  blackHolePrefabs:
+  meteorolitePrefabs:
+  - {fileID: 2731034470443544075, guid: a230db0177d70ca4a8196f9071e1fc44, type: 3}
+  - {fileID: 2731034470443544075, guid: 4c76219865aaa1c4b9e1a950ec7c94a1, type: 3}
+  - {fileID: 2731034470443544075, guid: 7ce45794a02ca6b43960319b579982a1, type: 3}
+  resourcePrefabs:
+  - {fileID: 2731034470443544075, guid: 9475420a9d5c9c344a156cbce47ba487, type: 3}
+  blackholePrefabs:
   - {fileID: 2731034470443544075, guid: a0b785dd98eaf414fa95748c8f686d3e, type: 3}
   ecostarPrefabs:
   - {fileID: 2731034470443544075, guid: a5c9c36b785d8e54b94673e111456b73, type: 3}
   - {fileID: 2731034470443544075, guid: f75ece45e66636b439ad676d0adbc538, type: 3}
   - {fileID: 2731034470443544075, guid: 01812354aa51ae84eac873a94039253f, type: 3}
-  cometPrefabs:
-  - {fileID: 2731034470443544075, guid: 39af6d0fab422934a9561e05dff31165, type: 3}
-  - {fileID: 2731034470443544075, guid: a7fa8939efdbcdf40afe0f85bef9b097, type: 3}
+  - {fileID: 2731034470443544075, guid: c7ba1c82d7230724dac86a6ccc862cca, type: 3}
+  - {fileID: 2731034470443544075, guid: 1b967c4a4c63d9247b7755098612c1c0, type: 3}
+  - {fileID: 2731034470443544075, guid: cbfa90b98ec7efe48b190b58d908a253, type: 3}
   planetRoot: {fileID: 706576542}
   earthController: {fileID: 286940148}
   planetMove: {fileID: 706576544}
