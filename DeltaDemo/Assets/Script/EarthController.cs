@@ -14,7 +14,7 @@ public class EarthController : MonoBehaviour
     void Update()
     {
         _CalcVelocity(_HandleInput());
-        _SetEarthVelocity();
+        _SetEarthPosition();
     }
 
     private Vector2 _HandleInput()
@@ -62,12 +62,17 @@ public class EarthController : MonoBehaviour
         }
     }
 
-    private void _SetEarthVelocity()
+    private void _SetEarthPosition()
     {
         float posX = _earthTransform.position.x;
         bool useHorizontalV = (posX >= xBound && _horizontalVelocity >= 0) ? false : true;
         Vector3 velocity = new Vector3(useHorizontalV ? _horizontalVelocity : 0, _verticalVelocity, 0);
-        _earthTransform.position += velocity;
+        Vector3 newPos = _earthTransform.position + velocity;
+        if (newPos.x > xBound)
+        {
+            newPos.x = xBound;
+        }
+        _earthTransform.position = newPos;
     }
 
     private float _Curve(float value)
