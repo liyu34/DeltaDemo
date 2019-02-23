@@ -25,10 +25,15 @@ public class EarthController : MonoBehaviour
     void Update()
     {
         float deltaTime = Time.deltaTime;
+        if (_horizontalVelocity > Constant.maxHorizontalVelocity)
+        {
+            _horizontalVelocity -= deltaTime * Constant.overMaxHVelocityDecreaseDelta;
+        }
         if (_afterStopKeepVelocityDelay > 0)
         {
             _afterStopKeepVelocityDelay -= deltaTime;
             _SetEarthPosition();
+            _SetFlame();
             return;
         }
         if (_stopSurroundDelay > 0)
@@ -62,8 +67,8 @@ public class EarthController : MonoBehaviour
         else
         {
             _CalcVelocity(_HandleInput());
-            _SetFlame();
             _SetEarthPosition();
+            _SetFlame();
         }
         for (int i = _crashedPlanets.Count - 1; i >= 0; i--) 
         {
@@ -143,6 +148,12 @@ public class EarthController : MonoBehaviour
         bool useHorizontalV = (posX >= xBound && _horizontalVelocity >= 0) ? false : true;
         Vector3 velocity = new Vector3(useHorizontalV ? _horizontalVelocity : 0, _verticalVelocity, 0);
         Vector3 newPos = _earthTransform.position + velocity;
+        if (Mathf.Abs(newPos.y) >= mapBound) 
+        {
+            int a = newPos.y > 0 ? 1 : -1;
+            _verticalVelocity = 0;
+            newPos.y = mapBound * a;
+        }
         _earthTransform.position = newPos;
     }
 
