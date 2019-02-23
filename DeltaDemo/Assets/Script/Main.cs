@@ -24,6 +24,7 @@ public class Main : MonoBehaviour
     public BackgroundScroller bgRemote;
     public BackgroundScroller bgNear;
 
+    private float earthReturnSpeed = 3f;
     private float bgRemoteRatio = 0.3f;
     private float bgNearRatio = 0.6f;
 
@@ -72,17 +73,32 @@ public class Main : MonoBehaviour
 
     void Update()
     {
+        float posX = earthController.GetEarthPosX();
         if (earthVelocity <= 0)
         {
             planetMove.speed = 0;
             bgRemote.scrollSpeed = 0;
             bgNear.scrollSpeed = 0;
+            if (posX <= -20)
+            {
+                Debug.LogError("你已经离开边界");
+            }
         }
         else
         {
-            planetMove.speed = earthVelocity;
-            bgRemote.scrollSpeed = -earthVelocity * bgRemoteRatio;
-            bgNear.scrollSpeed = -earthVelocity * bgNearRatio;
+            if (posX > -10)
+            {
+                earthController.SetEarthPosX(Mathf.Max(-10, posX - Time.deltaTime * earthReturnSpeed));
+                planetMove.speed = earthVelocity + earthReturnSpeed;
+                bgRemote.scrollSpeed = -earthVelocity * bgRemoteRatio + earthReturnSpeed;
+                bgNear.scrollSpeed = -earthVelocity * bgNearRatio + earthReturnSpeed;
+            }
+            else
+            {
+                planetMove.speed = earthVelocity;
+                bgRemote.scrollSpeed = -earthVelocity * bgRemoteRatio;
+                bgNear.scrollSpeed = -earthVelocity * bgNearRatio;
+            }
         }
     }
 
