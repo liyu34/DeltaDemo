@@ -8,6 +8,7 @@ public class EarthController : MonoBehaviour
     void Start()
     {
         _earthTransform = GetComponent<Transform>();
+        _flame = GetComponentInChildren<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -15,6 +16,7 @@ public class EarthController : MonoBehaviour
     {
         _CalcVelocity(_HandleInput());
         _SetEarthPosition();
+        _setFlame();
     }
 
     private Vector2 _HandleInput()
@@ -88,9 +90,40 @@ public class EarthController : MonoBehaviour
         }
     }
 
+    private void _setFlame()
+    {
+        float angle = 0;
+        if (_verticalVelocity == 0 || HorizontalVelocity == 0)
+        {
+            if (_verticalVelocity != 0)
+            {
+                angle = _verticalVelocity > 0 ? 90 : -90;
+            }
+            if (HorizontalVelocity != 0)
+            {
+                angle = HorizontalVelocity > 0 ? 0 : 180;
+            }
+        }
+        else
+        {
+            angle = Mathf.Atan2(_verticalVelocity, _horizontalVelocity) * 57.29f;
+        }
+        // y = -90 是固定的
+        _flame.transform.rotation = Quaternion.Euler(angle, -90, 0);
+
+        // 速度刺激火焰大小
+        float speed = Mathf.Sqrt
+            (_verticalVelocity * _verticalVelocity + _horizontalVelocity * _horizontalVelocity);
+        float lifeTime = speed / maxFlameSpeed * maxFlameLifeTime + minFlameLifeTime;
+        _flame.startLifetime = lifeTime;
+    }
+
     public AnimationCurve _curve;
     public float xBound = -10f;
     public float mapBound = 8.5f;
+    public float maxFlameSpeed = 3;
+    public float maxFlameLifeTime = 0.2f;
+    public float minFlameLifeTime = 0.05f;
     public float HorizontalVelocity
     {
         get
@@ -98,6 +131,7 @@ public class EarthController : MonoBehaviour
             return _horizontalVelocity;
         }
     }
+    private ParticleSystem _flame;
     private Transform _earthTransform;
     private float _horizontalVelocity;
     private float _verticalVelocity;
