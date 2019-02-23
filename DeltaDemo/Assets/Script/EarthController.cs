@@ -80,6 +80,14 @@ public class EarthController : MonoBehaviour
         return _curve.Evaluate(value);
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.isTrigger)
+        {
+            Destroy(other.gameObject);
+        }
+    }
+
     public AnimationCurve _curve;
     public float xBound = -10f;
     public float mapBound = 8.5f;
