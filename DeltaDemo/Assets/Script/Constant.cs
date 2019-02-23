@@ -13,11 +13,13 @@ public static class Constant
         public static int ecostar = 3;   // 环星
     }
 
-    public static int[,] maxDistance = new int[4, 4]
+    public static float[,] maxDistance = new float[4, 4]
     {
-        { 10, 10, 10, 10 },
-        { 10, 10, 10, 10 },
-        { 10, 10, 10, 10 },
-        { 10, 10, 10, 10 }
+        { 0.8f, 0.5f, 6f, 3.5f },
+        { 0.5f, 0.2f, 6f, 3.2f },
+        { 6f, 6f, 20f, 8f },
+        { 3.5f, 3.2f, 8f, 9f }
     };
+
+    public static int[] maxNum = new int[4] { };
 }
