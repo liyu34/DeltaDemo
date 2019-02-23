@@ -7,7 +7,6 @@ public class EarthController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _earth = GetComponent<Rigidbody2D>();
         _earthTransform = GetComponent<Transform>();
     }
 
@@ -66,7 +65,8 @@ public class EarthController : MonoBehaviour
     private void _SetEarthVelocity()
     {
         bool useHorizontalV = true;
-        _earth.velocity = new Vector2(useHorizontalV ? _horizontalVelocity : 0, _verticalVelocity);
+        Vector3 velocity = new Vector3(useHorizontalV ? _horizontalVelocity : 0, _verticalVelocity, 0);
+        _earthTransform.position += velocity;
     }
 
     private float _Curve(float value)
@@ -75,7 +75,6 @@ public class EarthController : MonoBehaviour
     }
 
     public AnimationCurve _curve;
-    private Rigidbody2D _earth;
     private Transform _earthTransform;
     private float _horizontalVelocity;
     private float _verticalVelocity;
