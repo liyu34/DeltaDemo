@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8828840320603961228}
   m_Layer: 0
   m_Name: meteorolite 02
-  m_TagString: Untagged
+  m_TagString: Meteorolite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

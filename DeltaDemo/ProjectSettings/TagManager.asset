@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - EcoStar
+  - Blackhole
+  - Meteorolite
+  - Resource
+  - Satellite
+  - Comet
   layers:
   - Default
   - TransparentFX
