@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Main : MonoBehaviour
 {
-    public int totalNum;
-    public int planetNum;
+    public int meteoroliteNum;
     public int resourceNum;
     public int blackholeNum;
     public int ecostarNum;
@@ -32,17 +31,41 @@ public class Main : MonoBehaviour
         get => earthController.HorizontalVelocity;
     }
 
+    private int totalNum;
+    private int[] typeList;
+    private bool[] hasSpawn;
     private int[] maxNum;
     private int[] count;
 
     void Start()
     {
         maxNum = new int[Constant.PlanetType.count];
-        maxNum[Constant.PlanetType.meteorolite] = planetNum;
+        maxNum[Constant.PlanetType.meteorolite] = meteoroliteNum;
         maxNum[Constant.PlanetType.resource] = resourceNum;
         maxNum[Constant.PlanetType.blackhole] = blackholeNum;
         maxNum[Constant.PlanetType.ecostar] = ecostarNum;
         count = new int[Constant.PlanetType.count];
+
+        totalNum = meteoroliteNum + resourceNum + blackholeNum + ecostarNum;
+        typeList = new int[totalNum];
+        int i = 0;
+        for (; i < meteoroliteNum; i++)
+        {
+            typeList[i] = Constant.PlanetType.meteorolite;
+        }
+        for (; i < meteoroliteNum + resourceNum; i++)
+        {
+            typeList[i] = Constant.PlanetType.resource;
+        }
+        for (; i < meteoroliteNum + resourceNum + blackholeNum; i++)
+        {
+            typeList[i] = Constant.PlanetType.blackhole;
+        }
+        for (; i < totalNum; i++)
+        {
+            typeList[i] = Constant.PlanetType.ecostar;
+        }
+        hasSpawn = new bool[totalNum];
         SpawnPlanets();
     }
 
@@ -68,16 +91,13 @@ public class Main : MonoBehaviour
         Vector3 lastLocalPosition = Vector3.zero;
         for (int i = 0; i < totalNum; i++)
         {
-            int type = Random.Range(0, Constant.PlanetType.count);
-            int thisCount = count[type];
-            int thisMaxNum = maxNum[type];
-            while (thisCount >= thisMaxNum)
+            int index = Random.Range(0, totalNum);
+            while (hasSpawn[index])
             {
-                type = Random.Range(0, Constant.PlanetType.count);
-                thisCount = count[type];
-                thisMaxNum = maxNum[type];
+                index = Random.Range(0, totalNum);
             }
-            count[type]++;
+            hasSpawn[index] = true;
+            int type = typeList[index];
 
             GameObject prefab = meteorolitePrefabs[0];
             Vector3 spawnPosition = new Vector3(spawnRange.x, 0, spawnRange.z);
@@ -109,7 +129,7 @@ public class Main : MonoBehaviour
 
             if (lastType != -1)
             {
-                float distOffset = Random.Range(0f, 1f) + Constant.maxDistance[type, lastType];
+                float distOffset = Random.Range(0f, 10f) + Constant.maxDistance[type, lastType];
                 float y = Random.Range(-spawnRange.y, spawnRange.y);
                 float xOffset;
                 if (Mathf.Abs(y - lastLocalPosition.y) >= distOffset)
