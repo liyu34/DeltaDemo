@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6270033776445461275}
   - component: {fileID: 290697652160613189}
-  - component: {fileID: 1822005818336236926}
+  - component: {fileID: 941928603100641241}
   m_Layer: 0
-  m_Name: Planet 01
+  m_Name: Planet 05
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c4bf8600cc6cac643ae48e9a0d3a80fd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1cdf9d5b7c329134db3852c8ebf56071, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!135 &1822005818336236926
+--- !u!135 &941928603100641241
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -91,5 +91,5 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.305
+  m_Radius: 1.42
   m_Center: {x: 0, y: 0, z: 0}
