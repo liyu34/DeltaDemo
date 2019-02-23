@@ -11,6 +11,7 @@ public class Main : MonoBehaviour
 
     public float spawnWait;
     public Vector3 spawnRange;
+    public Vector3 spawnRangeForEcostar;
 
     public GameObject[] meteorolitePrefabs;
     public GameObject[] resourcePrefabs;
@@ -121,7 +122,14 @@ public class Main : MonoBehaviour
             
             if (lastType == -1)
             {
-                spawnPosition = new Vector3(spawnRange.x, Random.Range(-spawnRange.y, spawnRange.y), spawnRange.z);
+                if (type == Constant.PlanetType.ecostar)
+                {
+                    spawnPosition = new Vector3(spawnRangeForEcostar.x, Random.Range(-spawnRangeForEcostar.y, spawnRangeForEcostar.y), spawnRangeForEcostar.z);
+                }
+                else
+                {
+                    spawnPosition = new Vector3(spawnRange.x, Random.Range(-spawnRange.y, spawnRange.y), spawnRange.z);
+                }
             }
             spawnRotation = Quaternion.identity;
             planet = Instantiate(prefab, spawnPosition, spawnRotation);
@@ -130,7 +138,15 @@ public class Main : MonoBehaviour
             if (lastType != -1)
             {
                 float distOffset = Random.Range(0f, 10f) + Constant.maxDistance[type, lastType];
-                float y = Random.Range(-spawnRange.y, spawnRange.y);
+                float y;
+                if (type == Constant.PlanetType.ecostar)
+                {
+                    y = Random.Range(-spawnRangeForEcostar.y, spawnRangeForEcostar.y);
+                }
+                else
+                {
+                    y = Random.Range(-spawnRange.y, spawnRange.y);
+                }
                 float xOffset;
                 if (Mathf.Abs(y - lastLocalPosition.y) >= distOffset)
                 {
