@@ -8,6 +8,6 @@ public class PlanetMove : MonoBehaviour
 
     void Update()
     {
-        
+        transform.position = transform.position - Vector3.right * (Time.deltaTime * speed);
     }
 }
