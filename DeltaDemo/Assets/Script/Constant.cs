@@ -6,19 +6,21 @@ public static class Constant
 {
     public static class PlanetType
     {
-        public static int count = 4;   // 类型总数
+        public static int count = 5;   // 类型总数
         public static int meteorolite = 0;   // 陨石
         public static int resource = 1;   // 资源点
         public static int blackhole = 2;   // 黑洞
         public static int ecostar = 3;   // 环星
+        public static int satellite = 4;   // 卫星
     }
 
-    public static float[,] maxDistance = new float[4, 4]
+    public static float[,] maxDistance = new float[5, 5]
     {
-        { 0.8f, 0.5f, 6f, 3.5f },
-        { 0.5f, 0.2f, 6f, 3.2f },
-        { 6f, 6f, 20f, 8f },
-        { 3.5f, 3.2f, 8f, 9f }
+        { 0.8f, 0.5f, 6f, 3.5f, 3f },
+        { 0.5f, 0.2f, 6f, 3.2f, 3f },
+        { 6f, 6f, 20f, 8f, 6f },
+        { 3.5f, 3.2f, 8f, 9f, 7f },
+        { 3f, 3f, 6f, 7f, 8f}
     };
 
     public static float ecoStarRadius = 5.008f;

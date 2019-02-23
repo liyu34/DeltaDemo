@@ -8,8 +8,8 @@ public class Main : MonoBehaviour
     public int resourceNum;
     public int blackholeNum;
     public int ecostarNum;
+    public int satelliteNum;
 
-    public float spawnWait;
     public Vector3 spawnRange;
     public Vector3 spawnRangeForEcostar;
 
@@ -17,6 +17,7 @@ public class Main : MonoBehaviour
     public GameObject[] resourcePrefabs;
     public GameObject[] blackholePrefabs;
     public GameObject[] ecostarPrefabs;
+    public GameObject[] satellitePrefabs;
 
     public GameObject planetRoot;
     public EarthController earthController;
@@ -46,9 +47,10 @@ public class Main : MonoBehaviour
         maxNum[Constant.PlanetType.resource] = resourceNum;
         maxNum[Constant.PlanetType.blackhole] = blackholeNum;
         maxNum[Constant.PlanetType.ecostar] = ecostarNum;
+        maxNum[Constant.PlanetType.satellite] = satelliteNum;
         count = new int[Constant.PlanetType.count];
 
-        totalNum = meteoroliteNum + resourceNum + blackholeNum + ecostarNum;
+        totalNum = meteoroliteNum + resourceNum + blackholeNum + ecostarNum + satelliteNum;
         typeList = new int[totalNum];
         int i = 0;
         for (; i < meteoroliteNum; i++)
@@ -63,9 +65,13 @@ public class Main : MonoBehaviour
         {
             typeList[i] = Constant.PlanetType.blackhole;
         }
-        for (; i < totalNum; i++)
+        for (; i < totalNum - satelliteNum; i++)
         {
             typeList[i] = Constant.PlanetType.ecostar;
+        }
+        for (; i < totalNum; i++)
+        {
+            typeList[i] = Constant.PlanetType.satellite;
         }
         hasSpawn = new bool[totalNum];
         SpawnPlanets();
@@ -133,6 +139,9 @@ public class Main : MonoBehaviour
                     break;
                 case (3):
                     prefab = ecostarPrefabs[Random.Range(0, ecostarPrefabs.Length)];
+                    break;
+                case (4):
+                    prefab = satellitePrefabs[Random.Range(0, satellitePrefabs.Length)];
                     break;
             }
             
