@@ -5458,8 +5458,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276974927}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40, y: 0, z: 10}
-  m_LocalScale: {x: 40, y: 20, z: 1}
+  m_LocalPosition: {x: -70, y: 0, z: 10}
+  m_LocalScale: {x: 70, y: 20, z: 1}
   m_Children:
   - {fileID: 1110226717}
   m_Father: {fileID: 396070015}
@@ -5523,7 +5523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: -1
-  widthSize: 40
+  widthSize: 70
 --- !u!1 &1319933685
 GameObject:
   m_ObjectHideFlags: 0
@@ -5719,8 +5719,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110629590}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -40, y: 0, z: 10}
-  m_LocalScale: {x: 40, y: 20, z: 1}
+  m_LocalPosition: {x: -70, y: 0, z: 10}
+  m_LocalScale: {x: 70, y: 20, z: 1}
   m_Children:
   - {fileID: 1319933686}
   m_Father: {fileID: 396070015}
@@ -5739,7 +5739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scrollSpeed: -2
-  widthSize: 40
+  widthSize: 70
 --- !u!23 &2110629593
 MeshRenderer:
   m_ObjectHideFlags: 0
