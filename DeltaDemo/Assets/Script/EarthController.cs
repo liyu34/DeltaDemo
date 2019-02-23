@@ -75,6 +75,13 @@ public class EarthController : MonoBehaviour
     }
 
     public AnimationCurve _curve;
+    public float HorizontalVelocity
+    {
+        get
+        {
+            return _horizontalVelocity;
+        }
+    }
     private Transform _earthTransform;
     private float _horizontalVelocity;
     private float _verticalVelocity;
