@@ -202,27 +202,59 @@ public class EarthModel
         {
             buff.BuffIt(this);
         }
-        ControlPanel.instance.UpdateTechInfo();
+    }
+
+    public void Impact(float value)
+    {
+
     }
 
     public FloatPropery velocity
     {
         get => m_Properties["velocity"];
-        set => m_Properties["velocity"] = value;
+        set
+        {
+            if (m_Properties["velocity"].Equals(value))
+                return;
+
+            m_Properties["velocity"] = value;
+            ControlPanel.instance.UpdateTechInfo();
+        }
     }
     public FloatPropery energy
     {
         get => m_Properties["energy"];
-        set => m_Properties["energy"] = value;
+        set
+        {
+            if (m_Properties["energy"].Equals(value))
+                return;
+
+            m_Properties["energy"] = value;
+            ControlPanel.instance.UpdateTechInfo();
+        }
     }
     public FloatPropery population
     {
         get => m_Properties["population"];
-        set => m_Properties["population"] = value;
+        set
+        {
+            if (m_Properties["population"].Equals(value))
+                return;
+
+            m_Properties["population"] = value;
+            ControlPanel.instance.UpdateTechInfo();
+        }
     }
     public FloatPropery tech
     {
         get => m_Properties["tech"];
-        set => m_Properties["tech"] = value;
+        set
+        {
+            if (m_Properties["tech"].Equals(value))
+                return;
+
+            m_Properties["tech"] = value;
+            ControlPanel.instance.UpdateTechInfo();
+        }
     }
 }
