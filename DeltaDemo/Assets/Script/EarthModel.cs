@@ -206,7 +206,17 @@ public class EarthModel
 
     public void Impact(float energy, float population, float tech)
     {
+        FloatPropery p = this.energy;
+        p.value += energy;
+        this.energy = p;
 
+        p = this.population;
+        p.value += population;
+        this.population = p;
+
+        p = this.tech;
+        p.value += tech;
+        this.tech = p;
     }
 
     public FloatPropery velocity
