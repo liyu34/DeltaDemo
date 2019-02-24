@@ -124,7 +124,7 @@ public class EarthController : MonoBehaviour
 
     public void ResetData()
     {
-        _earthTransform.position = new Vector3(-10, 0);
+        _earthTransform.position = new Vector3(-10, 0, 5);
         _horizontalVelocity = Constant.initialHorizontalVelocity;
         _verticalVelocity = 0;
     }
