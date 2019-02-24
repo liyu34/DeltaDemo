@@ -174,4 +174,13 @@ public class Main : MonoBehaviour
         earthController.gameObject.SetActive(false);
         UIRootControl.instance.LeaveRoom();
     }
+
+    public float EarthProgress()
+    {
+        if (earthController)
+        {
+            return earthController.Progress;
+        }
+        return 0f;
+    }
 }
