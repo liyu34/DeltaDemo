@@ -121,6 +121,7 @@ public class Main : MonoBehaviour
         isInRoom = true;
         curGalaxyNum = galaxyType;
         earthController.gameObject.SetActive(true);
+        earthController.EndDistance = Constant.galaxyLevelEndDistance[galaxyType];
         UIRootControl.instance.EnterRoom();
     }
 

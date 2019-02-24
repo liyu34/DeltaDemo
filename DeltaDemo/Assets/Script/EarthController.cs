@@ -150,7 +150,12 @@ public class EarthController : MonoBehaviour
     {
         if (_horizontalVelocity < Constant.maxHorizontalVelocity)
         {
-            _horizontalVelocity += direction.x * _accelerationCoefficient * EarthModel.instance.velocity.value;
+            float coe2 = EarthModel.instance.velocity.value;
+            if (coe2 == 0)
+            {
+                coe2 = 0.3f;
+            }
+            _horizontalVelocity += direction.x * _accelerationCoefficient * coe2;
             if (_horizontalVelocity < _minHorizontalVelocity)
             {
                 _horizontalVelocity = _minHorizontalVelocity;
@@ -392,7 +397,7 @@ public class EarthController : MonoBehaviour
         }
     }
 
-    private float _endDistance = 20f;
+    private float _endDistance = 315f;
     private GameObject _crashPlanetTempl;
     private List<CrashedPlanet> _crashedPlanets;
     private List<GameObject> _planetsCache;
