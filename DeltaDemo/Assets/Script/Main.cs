@@ -127,6 +127,7 @@ public class Main : MonoBehaviour
     {
         curGalaxyNum = 0;
         EarthModel.instance.ResetData();
+        earthController.ResetData();
     }
 
     public void EnterRoom(int galaxyType)

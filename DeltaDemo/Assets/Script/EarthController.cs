@@ -54,7 +54,6 @@ public class EarthController : MonoBehaviour
         if (_afterStopKeepVelocityDelay > 0)
         {
             _afterStopKeepVelocityDelay -= deltaTime;
-            _CalcVelocity(new Vector2(0, _afterStopKeepVerticalDirection));
             _SetEarthPosition();
             _SetFlame();
             return;
@@ -72,10 +71,9 @@ public class EarthController : MonoBehaviour
                 _horizontalVelocity = a * Constant.afterStopHorizontalVelocity;
                 if (_horizontalVelocity < 0)
                 {
-                    _horizontalVelocity = -0.1f;
+                    _horizontalVelocity = -0.5f;
                 }
-                _afterStopKeepVerticalDirection = dir.y;
-                _CalcVelocity(new Vector2(0, _afterStopKeepVerticalDirection));
+                _afterStopKeepVerticalVelocity = dir.y;
             }
             return;
         }
@@ -122,6 +120,13 @@ public class EarthController : MonoBehaviour
     public void SetEarthPosX(float x)
     {
         _earthTransform.position = new Vector3(x, _earthTransform.position.y, _earthTransform.position.z);
+    }
+
+    public void ResetData()
+    {
+        _earthTransform.position = new Vector3(-10, 0);
+        _horizontalVelocity = Constant.initialHorizontalVelocity;
+        _verticalVelocity = 0;
     }
 
     private Vector2 _HandleInput()
@@ -420,7 +425,7 @@ public class EarthController : MonoBehaviour
     private List<GameObject> _planetsCache;
     private float _stopSurroundDelay = 0;
     private float _afterStopKeepVelocityDelay = 0;
-    private float _afterStopKeepVerticalDirection = 1;
+    private float _afterStopKeepVerticalVelocity = 1;
     private bool _crossingBlackHole = false;
     private float _stayInBlackHoleTime = 0.0f;
     private float _enterBlackHoleHorSpeed = 0f;
