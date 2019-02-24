@@ -8,7 +8,11 @@ public class Main : MonoBehaviour
     public EarthController earthController;
     public PlanetMove planetMove;
     public BackgroundScroller bgRemote;
+    public Material[] bgRemoteMaterials;
     public BackgroundScroller bgNear;
+    public Material[] bgNearMaterials;
+    public MeshRenderer bgMeshRenderer;
+    public Material[] bgMaterials;
     public int failReason = 0;
 
     private bool isInRoom = false;
@@ -132,6 +136,10 @@ public class Main : MonoBehaviour
 
     public void EnterRoom(int galaxyType)
     {
+        int bgImageNum = Random.Range(0, 3);
+        bgMeshRenderer.material = bgMaterials[bgImageNum];
+        bgRemote.SetMaterial(bgRemoteMaterials[bgImageNum]);
+        bgNear.SetMaterial(bgNearMaterials[bgImageNum]);
         GetComponent<AudioSource>().Play();
         isInRoom = true;
         curGalaxyNum = galaxyType;

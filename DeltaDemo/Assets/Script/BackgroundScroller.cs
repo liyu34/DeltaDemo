@@ -23,4 +23,9 @@ public class BackgroundScroller : MonoBehaviour
         transform.position = startPosition + Vector3.right * newPositionOffset;
         lastPositionOffset = newPositionOffset;
     }
+
+    public void SetMaterial(Material material)
+    {
+        GetComponent<MeshRenderer>().material = material;
+    }
 }

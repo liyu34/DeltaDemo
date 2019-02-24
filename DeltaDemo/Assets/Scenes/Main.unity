@@ -16936,7 +16936,23 @@ MonoBehaviour:
   earthController: {fileID: 286940148}
   planetMove: {fileID: 706576544}
   bgRemote: {fileID: 1276974931}
+  bgRemoteMaterials:
+  - {fileID: 2100000, guid: baf586aaa236d7a4eb4c57328cd09537, type: 2}
+  - {fileID: 2100000, guid: 4ba5e9284d44b0146850931489961d6f, type: 2}
+  - {fileID: 2100000, guid: bedc3c7b3522f2243958be5a8cbc0535, type: 2}
+  - {fileID: 2100000, guid: 807c27999019df54585d9e023c8c8683, type: 2}
   bgNear: {fileID: 2110629592}
+  bgNearMaterials:
+  - {fileID: 2100000, guid: 12781861aee33f446bd941da8a421b3d, type: 2}
+  - {fileID: 2100000, guid: 66af6bb1199af1a4da120ddf8a73161a, type: 2}
+  - {fileID: 2100000, guid: b08bba94e742e9b48803b44b3a37ac8e, type: 2}
+  - {fileID: 2100000, guid: b200e774ee6cca9438ac7a121cad788f, type: 2}
+  bgMeshRenderer: {fileID: 1387510593}
+  bgMaterials:
+  - {fileID: 2100000, guid: 9854ee2e873ca1c48a35793d31cc6f44, type: 2}
+  - {fileID: 2100000, guid: 57aa46db5b0bdb64d8d54ef22d632a24, type: 2}
+  - {fileID: 2100000, guid: 25750f3824032ef468d06b8943c696de, type: 2}
+  - {fileID: 2100000, guid: b41fedd2a3863844b9acbb5942e122ba, type: 2}
   failReason: 0
 --- !u!4 &1228643683
 Transform:
