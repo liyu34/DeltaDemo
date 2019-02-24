@@ -15436,34 +15436,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e518d0b4cd7cd5e42a7db6ef482d114f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meteoroliteNum: 50
-  resourceNum: 20
-  blackholeNum: 2
-  ecostarNum: 3
-  satelliteNum: 10
-  spawnRange: {x: 20, y: 10, z: 5}
-  spawnRangeForEcostar: {x: 20, y: 5, z: 5}
-  meteorolitePrefabs:
-  - {fileID: 2731034470443544075, guid: a230db0177d70ca4a8196f9071e1fc44, type: 3}
-  - {fileID: 2731034470443544075, guid: 4c76219865aaa1c4b9e1a950ec7c94a1, type: 3}
-  - {fileID: 2731034470443544075, guid: 7ce45794a02ca6b43960319b579982a1, type: 3}
-  resourcePrefabs:
-  - {fileID: 2731034470443544075, guid: 9475420a9d5c9c344a156cbce47ba487, type: 3}
-  blackholePrefabs:
-  - {fileID: 2731034470443544075, guid: a0b785dd98eaf414fa95748c8f686d3e, type: 3}
-  ecostarPrefabs:
-  - {fileID: 2731034470443544075, guid: a5c9c36b785d8e54b94673e111456b73, type: 3}
-  - {fileID: 2731034470443544075, guid: f75ece45e66636b439ad676d0adbc538, type: 3}
-  - {fileID: 2731034470443544075, guid: 01812354aa51ae84eac873a94039253f, type: 3}
-  - {fileID: 2731034470443544075, guid: c7ba1c82d7230724dac86a6ccc862cca, type: 3}
-  - {fileID: 2731034470443544075, guid: 1b967c4a4c63d9247b7755098612c1c0, type: 3}
-  - {fileID: 2731034470443544075, guid: cbfa90b98ec7efe48b190b58d908a253, type: 3}
-  satellitePrefabs:
-  - {fileID: 2731034470443544075, guid: 96c8d589399284241a537ffa877fdbce, type: 3}
-  - {fileID: 2731034470443544075, guid: 54b8c888557674d4a8bf090e25be8a26, type: 3}
-  - {fileID: 2731034470443544075, guid: e1ebebc696215e44fb5ebbeab74a5844, type: 3}
-  - {fileID: 2731034470443544075, guid: cdf0eab5f803a514b8baf19ad8c8bd7d, type: 3}
-  - {fileID: 2731034470443544075, guid: b1696dbf61747dd43aa784913530f92e, type: 3}
   planetRoot: {fileID: 706576542}
   uiRootControl: {fileID: 591558864}
   earthController: {fileID: 286940148}
@@ -15720,16 +15692,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   galaxyOnImage:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 339224074}
+  - {fileID: 1623457723}
+  - {fileID: 1627075188}
+  - {fileID: 290761254}
+  - {fileID: 1018454666}
+  - {fileID: 784616654}
+  - {fileID: 1671576109}
+  - {fileID: 241639303}
+  - {fileID: 1587833036}
+  - {fileID: 1065551477}
   meteoroliteNum: 50
   resourceNum: 20
   blackholeNum: 2

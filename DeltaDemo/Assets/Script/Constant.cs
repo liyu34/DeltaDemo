@@ -23,6 +23,8 @@ public static class Constant
         { 3f, 3f, 6f, 7f, 8f}
     };
 
+    public static int[] galaxyLevelFirstNum = new int[5] { 0, 1, 4, 6, 9};
+
     public static float ecoStarRadius = 5.008f;
     public static float surroundAngleSpeed = 55;
     public static float stopSurroundDelayTime = 1;

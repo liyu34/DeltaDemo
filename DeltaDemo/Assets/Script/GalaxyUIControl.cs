@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class GalaxyUIControl : MonoBehaviour
 {
@@ -28,47 +29,78 @@ public class GalaxyUIControl : MonoBehaviour
     private int[] typeList;
     private bool[] hasSpawn;
 
+    private int activeLevel = 0;
     private bool[] isActiveList = new bool[10];
-    private int curGalaxyType;
 
-    private void Start()
+    void OnEnable()
     {
-        OnSelectGalaxy(0);
-    }
+        if (isActiveList[0])
+        {
+            if (isActiveList[1] || isActiveList[2] || isActiveList[3])
+            {
+                if (isActiveList[4] || isActiveList[5])
+                {
+                    if (isActiveList[6] || isActiveList[7] || isActiveList[8])
+                    {
+                        activeLevel = 4;
+                    }
+                    else
+                    {
+                        activeLevel = 3;
+                    }
+                }
+                else
+                {
+                    activeLevel = 2;
+                }
+            }
+            else
+            {
+                activeLevel = 1;
+            }
+        }
 
-    private void OnEnter()
-    {
-        EventSystem.current.SetSelectedGameObject(galaxyOnImage[0]);
+        int firstNum = Constant.galaxyLevelFirstNum[activeLevel];
+        int nextFirstNum = Constant.galaxyLevelFirstNum[Mathf.Min(4, activeLevel + 1)];
+
+        switch (activeLevel)
+        {
+            case 0:
+                for (int i = nextFirstNum; i < 10; i++)
+                {
+                    galaxyOnImage[i].GetComponent<Button>().interactable = false;
+                }
+                EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
+                break;
+            case 1:
+                for (int i = nextFirstNum; i < 10; i++)
+                {
+                    galaxyOnImage[i].GetComponent<Button>().interactable = false;
+                }
+                EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
+                break;
+            case 2:
+                for (int i = nextFirstNum; i < 10; i++)
+                {
+                    galaxyOnImage[i].GetComponent<Button>().interactable = false;
+                }
+                EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
+                break;
+            case 3:
+                for (int i = nextFirstNum; i < 10; i++)
+                {
+                    galaxyOnImage[i].GetComponent<Button>().interactable = false;
+                }
+                EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
+                break;
+            case 4:
+                EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
+                break;
+        }
     }
 
     public void OnSelectGalaxy(int galaxyType)
     {
-        bool canSelect = false;
-        switch (galaxyType)
-        {
-            case 0:
-                canSelect = true;
-                break;
-            case 1:
-            case 2:
-            case 3:
-                canSelect = isActiveList[0];
-                break;
-            case 4:
-            case 5:
-                canSelect = isActiveList[0] && (isActiveList[1] || isActiveList[2] || isActiveList[3]);
-                break;
-            case 6:
-            case 7:
-            case 8:
-                canSelect = isActiveList[0] && (isActiveList[1] || isActiveList[2] || isActiveList[3])
-                            && (isActiveList[4] || isActiveList[5]);
-                break;
-            case 9:
-                canSelect = isActiveList[0] && (isActiveList[1] || isActiveList[2] || isActiveList[3])
-                            && (isActiveList[4] || isActiveList[5]) && (isActiveList[6] || isActiveList[7] || isActiveList[8]);
-                break;
-        }
     }
 
     public void OnEnterGalaxy(int galaxyType)
