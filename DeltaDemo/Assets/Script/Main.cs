@@ -9,6 +9,7 @@ public class Main : MonoBehaviour
     public PlanetMove planetMove;
     public BackgroundScroller bgRemote;
     public BackgroundScroller bgNear;
+    public int failReason = 0;
 
     private bool isInRoom = false;
     private int curGalaxyNum = 0;
@@ -114,6 +115,13 @@ public class Main : MonoBehaviour
     {
         LeaveRoom();
         UIRootControl.instance.OpenGalaxy();
+        ResetGame();
+    }
+
+    public void ResetGame()
+    {
+        curGalaxyNum = 0;
+        EarthModel.instance.ResetData();
     }
 
     public void EnterRoom(int galaxyType)

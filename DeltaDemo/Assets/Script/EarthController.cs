@@ -32,7 +32,7 @@ public class EarthController : MonoBehaviour
             UIRootControl.instance.WinGame();
             return;
         }
-        if (_earthTransform.position.x <= -20)
+        if (_isLose())
         {
             UIRootControl.instance.LoseGame();
             return;
@@ -74,7 +74,7 @@ public class EarthController : MonoBehaviour
                 {
                     _horizontalVelocity = -0.1f;
                 }
-                _afterStopKeepVerticalDirection = dir.y > 0 ? 1 : -1;
+                _afterStopKeepVerticalDirection = dir.y;
                 _CalcVelocity(new Vector2(0, _afterStopKeepVerticalDirection));
             }
             return;
@@ -370,6 +370,23 @@ public class EarthController : MonoBehaviour
         return res;
     }
 
+    private bool _isLose()
+    {
+        if (_earthTransform.position.x <= -20)
+        {
+            return true;
+        }
+        if (EarthModel.instance.energy.value <= 0)
+        {
+            return true;
+        }
+        if (EarthModel.instance.population.value <= 0)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public AnimationCurve _curve;
     public AnimationCurve blackHoleSpeed;
     public float xBound = -10f;
@@ -403,7 +420,7 @@ public class EarthController : MonoBehaviour
     private List<GameObject> _planetsCache;
     private float _stopSurroundDelay = 0;
     private float _afterStopKeepVelocityDelay = 0;
-    private int _afterStopKeepVerticalDirection = 1;
+    private float _afterStopKeepVerticalDirection = 1;
     private bool _crossingBlackHole = false;
     private float _stayInBlackHoleTime = 0.0f;
     private float _enterBlackHoleHorSpeed = 0f;

@@ -74,6 +74,25 @@ public class EarthModel : MonoBehaviour
         instance = this;
     }
 
+    public void ResetData()
+    {
+        FloatPropery e = this.energy;
+        e.value = 10500;
+        this.energy = e;
+        FloatPropery p = this.population;
+        p.value = 3500;
+        this.population = p;
+        FloatPropery t = this.tech;
+        t.value = 5000;
+        this.tech = t;
+        FloatPropery d = this.defense;
+        d.value = 0;
+        this.defense = d;
+        FloatPropery v = this.velocity;
+        v.value = 0.5f;
+        this.velocity = v;
+    }
+
     private readonly Dictionary<string, FloatPropery> m_Properties = new Dictionary<string, FloatPropery>
     {
         {"velocity", new FloatPropery("velocity", 0.5f, 0, 1)},
@@ -338,4 +357,5 @@ public class EarthModel : MonoBehaviour
             _t = 0;
         }
     }
+
 }
