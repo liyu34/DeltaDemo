@@ -50,7 +50,7 @@ public class EarthController : MonoBehaviour
                 _horizontalVelocity = a * Constant.afterStopHorizontalVelocity;
                 if (_horizontalVelocity < 0)
                 {
-                    _horizontalVelocity = -1.5f;
+                    _horizontalVelocity = -0.1f;
                 }
                 _afterStopKeepVerticalDirection = dir.y > 0 ? 1 : -1;
                 _CalcVelocity(new Vector2(0, _afterStopKeepVerticalDirection));
