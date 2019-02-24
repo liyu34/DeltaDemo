@@ -438,7 +438,7 @@ public class EarthController : MonoBehaviour
     {
         get
         {
-            return _endDistance / _totalDistance;
+            return (_totalDistance - _endDistance ) / _totalDistance;
         }
     }
 

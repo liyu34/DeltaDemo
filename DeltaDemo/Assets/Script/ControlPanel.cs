@@ -175,6 +175,7 @@ public class ControlPanel : MonoBehaviour
     public InfoBar infoBar;
 
     [SerializeField] private Text tips;
+    [SerializeField] private Slider progress;
     [SerializeField] private LeftPanel leftPanel;
     [SerializeField] private RightPanel rightPanel;
 
@@ -298,6 +299,8 @@ public class ControlPanel : MonoBehaviour
 
     void OnShow()
     {
+        Main.instance.PauseGame();
+
         Vector2 from = rectTransform.anchoredPosition;
         Vector2 to = Vector2.up * rectTransform.rect.height;
         float duration = (to - from).magnitude / m_TransformAnimSpeed;
@@ -306,6 +309,8 @@ public class ControlPanel : MonoBehaviour
 
     void OnHide()
     {
+        Main.instance.ResumeGame();
+
         Vector2 from = rectTransform.anchoredPosition;
         Vector2 to = Vector2.zero;
         float duration = (to - from).magnitude / m_TransformAnimSpeed;
@@ -350,9 +355,11 @@ public class ControlPanel : MonoBehaviour
                     var techItem = techMatrix.GetChild(i);
                     bool isLearned = EarthModel.instance.buffList.ContainsKey(techItem.name);
                     var learned = GameObject.Find($"{techItem.name}/unlearned");
-                    learned.GetComponent<Image>().enabled = !isLearned;
+                    var img = learned?.GetComponent<Image>();
+                    if (img) img.enabled = !isLearned;
                     var unlearned = GameObject.Find($"{techItem.name}/learned");
-                    unlearned.GetComponent<Image>().enabled = isLearned;
+                    img = unlearned?.GetComponent<Image>();
+                    if (img) img.enabled = isLearned;
                 }
                 EventSystem.current.SetSelectedGameObject(techMatrix.GetChild(0).gameObject);
             }
@@ -394,6 +401,19 @@ public class ControlPanel : MonoBehaviour
         }
     }
 
+    public void OnLearnTech(string buffName)
+    {
+        const float COST = 5000;
+        if (EarthModel.instance.population.limitedValue <= COST)
+        {
+            FloatPropery p = EarthModel.instance.population;
+            p.value += COST - EarthModel.instance.defense.limitedValue;
+            EarthModel.instance.population = p;
+            EarthModel.instance.AddBuff(buffName);
+            OnImpact(true);
+        }
+    }
+
     private void InfoBarTint(Color colorTint, float duration, bool reverse)
     {
         var graphics = infoBar.root.GetComponentsInChildren<Graphic>();
@@ -405,7 +425,7 @@ public class ControlPanel : MonoBehaviour
 
     public void OnImpact(bool benefit)
     {
-        const float COLOR_TINT_DURATION = 0.05f;
+        const float COLOR_TINT_DURATION = 0.1f;
         Color colorTint = benefit ? infoBar.benefitColorTint : infoBar.loseColorTint;
         InfoBarTint(colorTint, COLOR_TINT_DURATION, false);
         DelayInvoke(COLOR_TINT_DURATION, () => InfoBarTint(colorTint, COLOR_TINT_DURATION, true));
@@ -428,10 +448,11 @@ public class ControlPanel : MonoBehaviour
         if (m_State == State.ShowRight)
         {
             var unlearned = GameObject.Find($"{buffName}/unlearned");
-            unlearned.GetComponent<Image>().enabled = false;
+            var img = unlearned?.GetComponent<Image>();
+            if (img) img.enabled = false;
             var learned = GameObject.Find($"{buffName}/learned");
-            learned.GetComponent<Image>().enabled = true;
-            Debug.Log($"{unlearned?.activeSelf}, {learned?.activeSelf}");
+            img = learned?.GetComponent<Image>();
+            if (img) img.enabled = true;
         }
     }
 
@@ -463,6 +484,9 @@ public class ControlPanel : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+        progress.value = Main.instance.EarthProgress();
+        progress.maxValue = 1f;
+
         UpdateTechInfo();
 
         if (Input.GetKeyDown(KeyCode.Space))
