@@ -77,7 +77,7 @@ public class EarthController : MonoBehaviour
                 {
                     _horizontalVelocity = -0.5f;
                 }
-                _afterStopKeepVerticalVelocity = dir.y;
+                _verticalVelocity = dir.y;
             }
             return;
         }
