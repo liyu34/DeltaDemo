@@ -15,6 +15,7 @@ public class FloatTweener<T>
     private float to;
     private float t = 0;
     private float duration;
+    private Action<T, float> onUpdate;
     private Action onFinished;
 
     public FloatTweener(Func<T, float> getter, Action<T, float> setter)
@@ -23,7 +24,7 @@ public class FloatTweener<T>
         this.setter = setter;
     }
 
-    public void Start(T obj, float from, float to, float duration, Action onFinished = null)
+    public void Start(T obj, float from, float to, float duration, Action<T, float> onUpdate = null, Action onFinished = null)
     {
         if (this.obj != null)
         {
@@ -36,6 +37,7 @@ public class FloatTweener<T>
         this.@from = from;
         this.to = to;
         this.duration = duration;
+        this.onUpdate = onUpdate;
         this.onFinished = onFinished;
     }
 
@@ -46,6 +48,7 @@ public class FloatTweener<T>
             t += dt;
             var now = getter(obj) + (to - from) / duration * dt;
             setter(obj, t < duration ? now : to);
+            onUpdate?.Invoke(obj, t < duration ? t : duration);
             if (t >= duration) onFinished?.Invoke();
         }
     }
@@ -60,6 +63,7 @@ public class Vector2Tweener<T>
     private Vector2 to;
     private float t = 0;
     private float duration;
+    private Action<T, float> onUpdate;
     private Action onFinished;
 
     public Vector2Tweener(Func<T, Vector2> getter, Action<T, Vector2> setter)
@@ -68,7 +72,7 @@ public class Vector2Tweener<T>
         this.setter = setter;
     }
 
-    public void Start(T obj, Vector2 from, Vector2 to, float duration, Action onFinished = null)
+    public void Start(T obj, Vector2 from, Vector2 to, float duration, Action<T, float> onUpdate = null, Action onFinished = null)
     {
         if (this.obj != null)
         {
@@ -81,6 +85,7 @@ public class Vector2Tweener<T>
         this.@from = from;
         this.to = to;
         this.duration = duration;
+        this.onUpdate = onUpdate;
         this.onFinished = onFinished;
     }
 
@@ -91,6 +96,7 @@ public class Vector2Tweener<T>
             t += dt;
             var now = getter(obj) + (to - from) / duration * dt;
             setter(obj, t < duration ? now : to);
+            onUpdate?.Invoke(obj, t < duration ? t : duration);
             if (t >= duration) onFinished?.Invoke();
         }
     }
@@ -316,7 +322,11 @@ public class ControlPanel : MonoBehaviour
         toHidden.gameObject.SetActive(false);
 
         panelToShow.gameObject.SetActive(true);
-        alphaTweener.Start(panelToShow, panelToShow.alpha = 0.0f, 1.0f, 1f / m_AlphaAnimSpeed, () => {
+        alphaTweener.Start(panelToShow, panelToShow.alpha = 0.0f, 1.0f, 1f / m_AlphaAnimSpeed, (obj, t) =>
+        {
+            if (t > Time.deltaTime)
+                return;
+
             if (m_State == State.ShowRight)
             {
                 EventSystem.current.SetSelectedGameObject(rightPanel.techTree.techMatrix.GetChild(0).gameObject);
@@ -361,13 +371,16 @@ public class ControlPanel : MonoBehaviour
     
     public void UpdateTechInfo()
     {
+        if (m_State != State.ShowLeft)
+            return;
+
         var techInfo = leftPanel.techInfo;
         var model = EarthModel.instance;
 
         techInfo.energy.total.text = $"{model.energy.value}/{model.energy.max}";
         techInfo.energy.growth.text = $"{model.energy.growth}";
 
-        techInfo.population.total.text = $"{model.population.value}/{model.population.max}";
+        techInfo.population.total.text = $"{model.population.limitedValue}/{model.population.max}";
         techInfo.population.growth.text = $"{model.population.growth}";
 
         techInfo.tech.total.text = $"{model.tech.value}/{model.tech.max}";
@@ -375,8 +388,13 @@ public class ControlPanel : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
+        if (m_State == State.ShowLeft)
+        {
+            UpdateTechInfo();
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Action action = isActive ? Action.Cancel : Action.Enter;
