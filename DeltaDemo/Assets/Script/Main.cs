@@ -126,6 +126,7 @@ public class Main : MonoBehaviour
 
     public void EnterRoom(int galaxyType)
     {
+        GetComponent<AudioSource>().Play();
         isInRoom = true;
         curGalaxyNum = galaxyType;
         earthController.gameObject.SetActive(true);
@@ -135,6 +136,7 @@ public class Main : MonoBehaviour
 
     public void LeaveRoom()
     {
+        GetComponent<AudioSource>().Stop();
         isInRoom = false;
         earthController.gameObject.SetActive(false);
         UIRootControl.instance.LeaveRoom();
