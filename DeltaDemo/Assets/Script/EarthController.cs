@@ -136,7 +136,14 @@ public class EarthController : MonoBehaviour
 
     private void _CalcVelocity(Vector2 direction)
     {
-        _horizontalVelocity += direction.x * _accelerationCoefficient;
+        if (_horizontalVelocity < Constant.maxHorizontalVelocity)
+        {
+            _horizontalVelocity += direction.x * _accelerationCoefficient * EarthModel.instance.velocity.value;
+            if (_horizontalVelocity < _minHorizontalVelocity)
+            {
+                _horizontalVelocity = _minHorizontalVelocity;
+            }
+        }
         float dirY = direction.y;// [-1, 0, 1]
         float posY = _earthTransform.position.y;
         if (dirY == -1)
@@ -372,6 +379,8 @@ public class EarthController : MonoBehaviour
     private ParticleSystem _flame;
     private Transform _earthTransform;
     private float _horizontalVelocity = Constant.initialHorizontalVelocity;
+    // 能用操作降低到的最低速度
+    private float _minHorizontalVelocity = 0.5f;
     private float _verticalVelocity;
-    private float _accelerationCoefficient = 0.01f;
+    private float _accelerationCoefficient = 0.1f;
 }
