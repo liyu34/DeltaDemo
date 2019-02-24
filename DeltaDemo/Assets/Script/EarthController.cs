@@ -427,8 +427,23 @@ public class EarthController : MonoBehaviour
             return _endDistance;
         }
     }
+    public float TotalDistance
+    {
+        set
+        {
+            _totalDistance = value;
+        }
+    }
+    public float Progress
+    {
+        get
+        {
+            return _endDistance / _totalDistance;
+        }
+    }
 
     private float _endDistance = 315f;
+    private float _totalDistance;
     private GameObject _crashPlanetTempl;
     private List<CrashedPlanet> _crashedPlanets;
     private List<GameObject> _planetsCache;
