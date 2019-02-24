@@ -182,10 +182,22 @@ public class EarthController : MonoBehaviour
                 _startSurround(Constant.ecoStarRadius, Constant.surroundAngleSpeed,
                     other.transform.position);
             }
+            else if( other.gameObject.tag == "Blackhole")
+            {
+                _crossingBlackHole = true;
+            }
             else
             {
                 _CrashStar(other.gameObject);
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Blackhole")
+        {
+            _crossingBlackHole = false;
         }
     }
 
@@ -331,6 +343,7 @@ public class EarthController : MonoBehaviour
     private float _stopSurroundDelay = 0;
     private float _afterStopKeepVelocityDelay = 0;
     private int _afterStopKeepVerticalDirection = 1;
+    private bool _crossingBlackHole = false;
     private GameObject _surroundingStar;
     private bool _surroundState = false;
     private float _surroundAngle;

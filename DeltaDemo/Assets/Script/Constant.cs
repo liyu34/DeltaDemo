@@ -30,5 +30,5 @@ public static class Constant
     public static float afterStopHorizontalVelocity = 6;
     public static float maxHorizontalVelocity = 4.5f;
     public static float overMaxHVelocityDecreaseDelta = 1f;
-    public static float initialHorizontalVelocity = 1.0f;
+    public static float initialHorizontalVelocity = 0.5f;
 }
