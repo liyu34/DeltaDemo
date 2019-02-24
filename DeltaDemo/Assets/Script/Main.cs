@@ -4,21 +4,6 @@ using UnityEngine;
 
 public class Main : MonoBehaviour
 {
-    public int meteoroliteNum;
-    public int resourceNum;
-    public int blackholeNum;
-    public int ecostarNum;
-    public int satelliteNum;
-
-    public Vector3 spawnRange;
-    public Vector3 spawnRangeForEcostar;
-
-    public GameObject[] meteorolitePrefabs;
-    public GameObject[] resourcePrefabs;
-    public GameObject[] blackholePrefabs;
-    public GameObject[] ecostarPrefabs;
-    public GameObject[] satellitePrefabs;
-
     public GameObject planetRoot;
     public UIRootControl uiRootControl;
     public EarthController earthController;
@@ -26,7 +11,7 @@ public class Main : MonoBehaviour
     public BackgroundScroller bgRemote;
     public BackgroundScroller bgNear;
 
-    private bool isInRoom = true;
+    private bool isInRoom = false;
 
     private float earthReturnSpeed = 3f;
     private float bgRemoteRatio = 0.3f;
@@ -52,39 +37,8 @@ public class Main : MonoBehaviour
 
     void Start()
     {
-        maxNum = new int[Constant.PlanetType.count];
-        maxNum[Constant.PlanetType.meteorolite] = meteoroliteNum;
-        maxNum[Constant.PlanetType.resource] = resourceNum;
-        maxNum[Constant.PlanetType.blackhole] = blackholeNum;
-        maxNum[Constant.PlanetType.ecostar] = ecostarNum;
-        maxNum[Constant.PlanetType.satellite] = satelliteNum;
-        count = new int[Constant.PlanetType.count];
-
-        totalNum = meteoroliteNum + resourceNum + blackholeNum + ecostarNum + satelliteNum;
-        typeList = new int[totalNum];
-        int i = 0;
-        for (; i < meteoroliteNum; i++)
-        {
-            typeList[i] = Constant.PlanetType.meteorolite;
-        }
-        for (; i < meteoroliteNum + resourceNum; i++)
-        {
-            typeList[i] = Constant.PlanetType.resource;
-        }
-        for (; i < meteoroliteNum + resourceNum + blackholeNum; i++)
-        {
-            typeList[i] = Constant.PlanetType.blackhole;
-        }
-        for (; i < totalNum - satelliteNum; i++)
-        {
-            typeList[i] = Constant.PlanetType.ecostar;
-        }
-        for (; i < totalNum; i++)
-        {
-            typeList[i] = Constant.PlanetType.satellite;
-        }
-        hasSpawn = new bool[totalNum];
-        SpawnPlanets();
+        uiRootControl.SetUIEnable("Galaxy", true);
+        earthController.gameObject.SetActive(false);
     }
 
     void Update()
@@ -124,91 +78,12 @@ public class Main : MonoBehaviour
     public void EnterRoom()
     {
         isInRoom = true;
+        earthController.gameObject.SetActive(true);
     }
 
     public void LeaveRoom()
     {
         isInRoom = false;
-    }
-
-    private void SpawnPlanets()
-    {
-        int lastType = -1;
-        Vector3 lastLocalPosition = Vector3.zero;
-        for (int i = 0; i < totalNum; i++)
-        {
-            int index = Random.Range(0, totalNum);
-            while (hasSpawn[index])
-            {
-                index = Random.Range(0, totalNum);
-            }
-            hasSpawn[index] = true;
-            int type = typeList[index];
-
-            GameObject prefab = meteorolitePrefabs[0];
-            Vector3 spawnPosition = new Vector3(spawnRange.x, 0, spawnRange.z);
-            Quaternion spawnRotation;
-            GameObject planet;
-            switch (type)
-            {
-                case (0):
-                    prefab = meteorolitePrefabs[Random.Range(0, meteorolitePrefabs.Length)];
-                    break;
-                case (1):
-                    prefab = resourcePrefabs[Random.Range(0, resourcePrefabs.Length)];
-                    break;
-                case (2):
-                    prefab = blackholePrefabs[Random.Range(0, blackholePrefabs.Length)];
-                    break;
-                case (3):
-                    prefab = ecostarPrefabs[Random.Range(0, ecostarPrefabs.Length)];
-                    break;
-                case (4):
-                    prefab = satellitePrefabs[Random.Range(0, satellitePrefabs.Length)];
-                    break;
-            }
-            
-            if (lastType == -1)
-            {
-                if (type == Constant.PlanetType.ecostar)
-                {
-                    spawnPosition = new Vector3(spawnRangeForEcostar.x, Random.Range(-spawnRangeForEcostar.y, spawnRangeForEcostar.y), spawnRangeForEcostar.z);
-                }
-                else
-                {
-                    spawnPosition = new Vector3(spawnRange.x, Random.Range(-spawnRange.y, spawnRange.y), spawnRange.z);
-                }
-            }
-            spawnRotation = Quaternion.identity;
-            planet = Instantiate(prefab, spawnPosition, spawnRotation);
-            planet.transform.parent = planetRoot.transform;
-
-            if (lastType != -1)
-            {
-                float distOffset = Random.Range(0f, 10f) + Constant.maxDistance[type, lastType];
-                float y;
-                if (type == Constant.PlanetType.ecostar)
-                {
-                    y = Random.Range(-spawnRangeForEcostar.y, spawnRangeForEcostar.y);
-                }
-                else
-                {
-                    y = Random.Range(-spawnRange.y, spawnRange.y);
-                }
-                float xOffset;
-                if (Mathf.Abs(y - lastLocalPosition.y) >= distOffset)
-                {
-                    xOffset = Random.Range(0f, 2f);
-                }
-                else
-                {
-                    xOffset = Mathf.Sqrt(distOffset * distOffset - (y - lastLocalPosition.y) * (y - lastLocalPosition.y));
-                }
-                planet.transform.localPosition = new Vector3(lastLocalPosition.x + xOffset, y, lastLocalPosition.z);
-            }
-
-            lastType = type;
-            lastLocalPosition = planet.transform.localPosition;
-        }
+        earthController.gameObject.SetActive(false);
     }
 }
