@@ -61,42 +61,17 @@ public class GalaxyUIControl : MonoBehaviour
         }
 
         int firstNum = Constant.galaxyLevelFirstNum[activeLevel];
-        int nextFirstNum = Constant.galaxyLevelFirstNum[Mathf.Min(4, activeLevel + 1)];
-
-        switch (activeLevel)
+        if (activeLevel != 4)
         {
-            case 0:
-                for (int i = nextFirstNum; i < 10; i++)
-                {
-                    galaxyOnImage[i].GetComponent<Button>().interactable = false;
-                }
-                EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
-                break;
-            case 1:
-                for (int i = nextFirstNum; i < 10; i++)
-                {
-                    galaxyOnImage[i].GetComponent<Button>().interactable = false;
-                }
-                EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
-                break;
-            case 2:
-                for (int i = nextFirstNum; i < 10; i++)
-                {
-                    galaxyOnImage[i].GetComponent<Button>().interactable = false;
-                }
-                EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
-                break;
-            case 3:
-                for (int i = nextFirstNum; i < 10; i++)
-                {
-                    galaxyOnImage[i].GetComponent<Button>().interactable = false;
-                }
-                EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
-                break;
-            case 4:
-                EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
-                break;
+            int nextFirstNum = Constant.galaxyLevelFirstNum[activeLevel + 1];
+
+            for (int i = nextFirstNum; i < 10; i++)
+            {
+                galaxyOnImage[i].GetComponent<Button>().interactable = false;
+            }
         }
+        EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
+        galaxyOnImage[firstNum].GetComponent<Button>().Select();
     }
 
     public void OnSelectGalaxy(int galaxyType)
