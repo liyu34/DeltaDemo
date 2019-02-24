@@ -59,6 +59,7 @@ public class GalaxyUIControl : MonoBehaviour
         }
         if (canSelect)
         {
+            Main.instance.EnterRoom();
             InitSpawnParams();
             SpawnPlanets();
             transform.gameObject.SetActive(false);
