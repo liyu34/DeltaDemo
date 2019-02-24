@@ -1091,6 +1091,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 495286853}
+  - component: {fileID: 495286854}
   m_Layer: 0
   m_Name: UIRoot
   m_TagString: Untagged
@@ -1113,6 +1114,19 @@ Transform:
   m_Father: {fileID: 1228643683}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &495286854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495286852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40c66ae08bef00748b7c199e4c98a35d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  galaxyUI: {fileID: 0}
 --- !u!1 &510985564
 GameObject:
   m_ObjectHideFlags: 0
@@ -12417,6 +12431,7 @@ MonoBehaviour:
   - {fileID: 2731034470443544075, guid: cdf0eab5f803a514b8baf19ad8c8bd7d, type: 3}
   - {fileID: 2731034470443544075, guid: b1696dbf61747dd43aa784913530f92e, type: 3}
   planetRoot: {fileID: 706576542}
+  uiRootControl: {fileID: 495286854}
   earthController: {fileID: 286940148}
   planetMove: {fileID: 706576544}
   bgRemote: {fileID: 1276974931}

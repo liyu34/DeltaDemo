@@ -20,6 +20,7 @@ public class Main : MonoBehaviour
     public GameObject[] satellitePrefabs;
 
     public GameObject planetRoot;
+    public UIRootControl uiRootControl;
     public EarthController earthController;
     public PlanetMove planetMove;
     public BackgroundScroller bgRemote;
