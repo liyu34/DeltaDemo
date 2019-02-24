@@ -204,12 +204,19 @@ public class EarthController : MonoBehaviour
                 if (!_crossingBlackHole)
                 {
                     _crossingBlackHole = true;
+                    EarthModel.instance.AddBuff("BlackHole");
                     _enterBlackHoleHorSpeed = _horizontalVelocity;
                     _stayInBlackHoleTime = 0.0f;
                 }
             }
+            else if (other.gameObject.tag == "Resource")
+            {
+                EarthModel.instance.Impact(60, 0, 30);
+                _CrashStar(other.gameObject);
+            }
             else
             {
+                EarthModel.instance.Impact(360, -50, 200);
                 _CrashStar(other.gameObject);
             }
         }
@@ -220,6 +227,7 @@ public class EarthController : MonoBehaviour
         if (other.gameObject.tag == "Blackhole")
         {
             _crossingBlackHole = false;
+            EarthModel.instance.RemoveBuff("BlackHole");
             _stayInBlackHoleTime = 0.0f;
         }
     }
