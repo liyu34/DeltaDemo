@@ -516,6 +516,39 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  blackHoleSpeed:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -0.6117638
+      outSlope: -0.6117638
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.29999885
+      value: 0.8164716
+      inSlope: -0.32799774
+      outSlope: -0.32799774
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.20907556
+    - serializedVersion: 3
+      time: 1
+      value: 0.7
+      inSlope: -0.16638772
+      outSlope: -0.16638772
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   xBound: -10
   mapBound: 8.5
   maxFlameSpeed: 3
