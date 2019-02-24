@@ -15,7 +15,7 @@ public class WinPanelScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            // return main.galx(
+            Main.instance.WinGame();
         }
     }
 }

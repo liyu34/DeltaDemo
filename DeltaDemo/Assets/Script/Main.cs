@@ -11,6 +11,9 @@ public class Main : MonoBehaviour
     public BackgroundScroller bgNear;
 
     private bool isInRoom = false;
+    private int curGalaxyNum = 0;
+    private int curGalaxyLevel = 0;
+    private bool[] galaxyActiveList = new bool[10];
 
     private float earthReturnSpeed = 3f;
     private float bgRemoteRatio = 0.3f;
@@ -28,6 +31,35 @@ public class Main : MonoBehaviour
     private int[] count;
 
     public static Main instance;
+    public int CurGalaxyNum
+    {
+        get
+        {
+            return curGalaxyNum;
+        }
+        set
+        {
+            curGalaxyNum = Mathf.Clamp(value, 0, 9);
+        }
+    }
+    public int CurGalaxyLevel
+    {
+        get
+        {
+            return curGalaxyLevel;
+        }
+        set
+        {
+            curGalaxyLevel = Mathf.Clamp(value, 0, 4);
+        }
+    }
+    public bool[] GalaxyActiveList
+    {
+        get
+        {
+            return galaxyActiveList;
+        }
+    }
 
     private void Awake()
     {
@@ -36,7 +68,7 @@ public class Main : MonoBehaviour
 
     void Start()
     {
-        UIRootControl.instance.openGalaxy();
+        UIRootControl.instance.OpenGalaxy();
         earthController.gameObject.SetActive(false);
     }
 
@@ -70,17 +102,30 @@ public class Main : MonoBehaviour
         }
     }
 
-    public void EnterRoom()
+    public void WinGame()
+    {
+        galaxyActiveList[CurGalaxyNum] = true;
+        CurGalaxyLevel++;
+        UIRootControl.instance.OpenGalaxy();
+    }
+
+    public void LoseGame()
+    {
+        UIRootControl.instance.OpenGalaxy();
+    }
+
+    public void EnterRoom(int galaxyType)
     {
         isInRoom = true;
+        curGalaxyNum = galaxyType;
         earthController.gameObject.SetActive(true);
-        UIRootControl.instance.enterRoom();
+        UIRootControl.instance.EnterRoom();
     }
 
     public void LeaveRoom()
     {
         isInRoom = false;
         earthController.gameObject.SetActive(false);
-        UIRootControl.instance.leaveRoom();
+        UIRootControl.instance.LeaveRoom();
     }
 }

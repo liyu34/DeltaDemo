@@ -15,7 +15,7 @@ public class LosePanelScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            // return main.galx(
+            Main.instance.LoseGame();
         }
     }
 }

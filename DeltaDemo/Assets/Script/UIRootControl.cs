@@ -26,7 +26,7 @@ public class UIRootControl : MonoBehaviour
         
     }
 
-    public void openGalaxy()
+    public void OpenGalaxy()
     {
         galaxyUI.SetActive(true);
         winPanel.SetActive(false);
@@ -34,7 +34,7 @@ public class UIRootControl : MonoBehaviour
         losePanel.SetActive(false);
     }
 
-    public void enterRoom()
+    public void EnterRoom()
     {
         galaxyUI.SetActive(false);
         winPanel.SetActive(false);
@@ -42,19 +42,19 @@ public class UIRootControl : MonoBehaviour
         losePanel.SetActive(false);
     }
 
-    public void leaveRoom()
+    public void LeaveRoom()
     {
         controlPanel.SetActive(false);
         losePanel.SetActive(false);
     }
     
-    public void winGame()
+    public void WinGame()
     {
         winPanel.SetActive(true);
         losePanel.SetActive(false);
     }
 
-    public void loseGame()
+    public void LoseGame()
     {
         winPanel.SetActive(false);
         losePanel.SetActive(true);

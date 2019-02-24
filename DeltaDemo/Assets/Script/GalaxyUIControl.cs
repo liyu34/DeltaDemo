@@ -29,36 +29,13 @@ public class GalaxyUIControl : MonoBehaviour
     private int[] typeList;
     private bool[] hasSpawn;
 
+    private bool[] activleList;
     private int activeLevel = 0;
-    private bool[] isActiveList = new bool[10];
 
     void OnEnable()
     {
-        if (isActiveList[0])
-        {
-            if (isActiveList[1] || isActiveList[2] || isActiveList[3])
-            {
-                if (isActiveList[4] || isActiveList[5])
-                {
-                    if (isActiveList[6] || isActiveList[7] || isActiveList[8])
-                    {
-                        activeLevel = 4;
-                    }
-                    else
-                    {
-                        activeLevel = 3;
-                    }
-                }
-                else
-                {
-                    activeLevel = 2;
-                }
-            }
-            else
-            {
-                activeLevel = 1;
-            }
-        }
+        activleList = Main.instance.GalaxyActiveList;
+        activeLevel = Main.instance.CurGalaxyLevel;
 
         int firstNum = Constant.galaxyLevelFirstNum[activeLevel];
         if (activeLevel != 4)
@@ -89,35 +66,30 @@ public class GalaxyUIControl : MonoBehaviour
             case 1:
             case 2:
             case 3:
-                canSelect = isActiveList[0];
+                canSelect = activleList[0];
                 break;
             case 4:
             case 5:
-                canSelect = isActiveList[0] && (isActiveList[1] || isActiveList[2] || isActiveList[3]);
+                canSelect = activleList[0] && (activleList[1] || activleList[2] || activleList[3]);
                 break;
             case 6:
             case 7:
             case 8:
-                canSelect = isActiveList[0] && (isActiveList[1] || isActiveList[2] || isActiveList[3])
-                            && (isActiveList[4] || isActiveList[5]);
+                canSelect = activleList[0] && (activleList[1] || activleList[2] || activleList[3])
+                            && (activleList[4] || activleList[5]);
                 break;
             case 9:
-                canSelect = isActiveList[0] && (isActiveList[1] || isActiveList[2] || isActiveList[3])
-                            && (isActiveList[4] || isActiveList[5]) && (isActiveList[6] || isActiveList[7] || isActiveList[8]);
+                canSelect = activleList[0] && (activleList[1] || activleList[2] || activleList[3])
+                            && (activleList[4] || activleList[5]) && (activleList[6] || activleList[7] || activleList[8]);
                 break;
         }
         if (canSelect)
         {
-            Main.instance.EnterRoom();
+            Main.instance.EnterRoom(galaxyType);
             InitSpawnParams();
             SpawnPlanets();
             transform.gameObject.SetActive(false);
         }
-    }
-
-    public void SetActiveGalaxy(int galaxyType)
-    {
-        isActiveList[galaxyType] = true;
     }
 
     private void InitSpawnParams()
