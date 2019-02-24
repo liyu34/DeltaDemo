@@ -204,7 +204,7 @@ public class EarthModel
         }
     }
 
-    public void Impact(float value)
+    public void Impact(float energy, float population, float tech)
     {
 
     }
