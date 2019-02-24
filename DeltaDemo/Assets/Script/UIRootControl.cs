@@ -5,6 +5,8 @@ using UnityEngine;
 public class UIRootControl : MonoBehaviour
 {
     public GameObject galaxyUI;
+    public GameObject winPanel;
+    public GameObject controlPanel;
 
     void Start()
     {
