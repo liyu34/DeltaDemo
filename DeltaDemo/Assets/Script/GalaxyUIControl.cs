@@ -75,7 +75,10 @@ public class GalaxyUIControl : MonoBehaviour
 
     public void OnUnselectGalaxy(int galaxyType)
     {
-        galaxyOnImage[galaxyType].transform.GetChild(0).gameObject.SetActive(false);
+        if (!activeList[galaxyType])
+        {
+            galaxyOnImage[galaxyType].transform.GetChild(0).gameObject.SetActive(false);
+        }
     }
 
     public void OnEnterGalaxy(int galaxyType)
