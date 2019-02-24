@@ -230,7 +230,7 @@ public class EarthModel : MonoBehaviour
         }
     }
 
-    public void Impact(float energy, float population, float tech)
+    public void Impact(float energy, float population, float tech, bool benefit)
     {
         FloatPropery p = this.energy;
         p.value += energy;
@@ -243,6 +243,8 @@ public class EarthModel : MonoBehaviour
         p = this.tech;
         p.value += tech;
         this.tech = p;
+
+        ControlPanel.instance.OnImpact(benefit);
     }
 
     public FloatPropery velocity

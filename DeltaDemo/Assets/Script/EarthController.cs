@@ -228,12 +228,12 @@ public class EarthController : MonoBehaviour
             }
             else if (other.gameObject.tag == "Resource")
             {
-                EarthModel.instance.Impact(60, 0, 30);
+                EarthModel.instance.Impact(60, 0, 30, true);
                 _CrashStar(other.gameObject);
             }
             else
             {
-                EarthModel.instance.Impact(360, -50, 200);
+                EarthModel.instance.Impact(360, -50, 200, false);
                 _CrashStar(other.gameObject);
             }
         }

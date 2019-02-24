@@ -113,11 +113,12 @@ public class ControlPanel : MonoBehaviour
 
     static Dictionary<State, string> s_TipsDict = new Dictionary<State, string>
     {
-        { State.Hidden, "[Space] 打开面板" },
-        { State.ShowCover, "[space] 继续航行  [←] 星球状况  [→] 科技树" },
-        { State.ShowLeft, "[Space] 返回上层" },
-        { State.ShowRight, "[Space] 返回上层  [Arrow] 选择科技  [Enter] 升级科技" },
+        {State.Hidden, "[Space] 打开面板"},
+        {State.ShowCover, "[space] 继续航行  [←] 星球状况  [→] 科技树"},
+        {State.ShowLeft, "[Space] 返回上层"},
+        {State.ShowRight, "[Space] 返回上层  [Arrow] 选择科技  [Enter] 升级科技"},
     };
+
     public RectTransform rectTransform => transform as RectTransform;
 
     [Serializable]
@@ -160,11 +161,25 @@ public class ControlPanel : MonoBehaviour
         public TechTree techTree;
     }
 
-    [SerializeField] private Text m_Tips;
+    [Serializable]
+    public struct InfoBar
+    {
+        public Color benefitColorTint;
+        public Color loseColorTint;
+        public RectTransform root;
+        public Slider energy;
+        public Slider population;
+        public Slider tech;
+    }
+
+    public InfoBar infoBar;
+
+    [SerializeField] private Text tips;
     [SerializeField] private LeftPanel leftPanel;
     [SerializeField] private RightPanel rightPanel;
 
     private Vector2Tweener<RectTransform> m_PositionTweener;
+
     private Vector2Tweener<RectTransform> positionTweener
     {
         get
@@ -172,10 +187,7 @@ public class ControlPanel : MonoBehaviour
             if (m_PositionTweener is null)
             {
                 m_PositionTweener = new Vector2Tweener<RectTransform>(rt => rt.anchoredPosition,
-                    (rt, value) =>
-                    {
-                        rt.anchoredPosition = value;
-                    });
+                    (rt, value) => { rt.anchoredPosition = value; });
             }
 
             return m_PositionTweener;
@@ -183,6 +195,7 @@ public class ControlPanel : MonoBehaviour
     }
 
     private Vector2Tweener<RectTransform> m_SizeTweener;
+
     private Vector2Tweener<RectTransform> sizeTweener
     {
         get
@@ -190,10 +203,7 @@ public class ControlPanel : MonoBehaviour
             if (m_SizeTweener is null)
             {
                 m_SizeTweener = new Vector2Tweener<RectTransform>(rt => rt.sizeDelta,
-                    (rt, value) =>
-                    {
-                        rt.sizeDelta = value;
-                    });
+                    (rt, value) => { rt.sizeDelta = value; });
             }
 
             return m_SizeTweener;
@@ -208,7 +218,7 @@ public class ControlPanel : MonoBehaviour
         {
             if (m_AlphaTweener is null)
             {
-                m_AlphaTweener = new FloatTweener<CanvasGroup>(cg=>cg.alpha, (cg, value) => { cg.alpha = value; });
+                m_AlphaTweener = new FloatTweener<CanvasGroup>(cg => cg.alpha, (cg, value) => { cg.alpha = value; });
             }
 
             return m_AlphaTweener;
@@ -243,22 +253,25 @@ public class ControlPanel : MonoBehaviour
                 {
                     OnShow();
                     m_State = State.ShowCover;
-                    m_Tips.text = s_TipsDict[m_State];
+                    tips.text = s_TipsDict[m_State];
                 }
+
                 break;
             case State.ShowCover:
                 if (action == Action.Cancel)
                 {
                     OnHide();
                     m_State = State.Hidden;
-                    m_Tips.text = s_TipsDict[m_State];
+                    tips.text = s_TipsDict[m_State];
                 }
                 else if (action > Action.Enter)
                 {
-                    OnEnter(action);;
+                    OnEnter(action);
+                    ;
                     m_State = action == Action.Left ? State.ShowLeft : State.ShowRight;
-                    m_Tips.text = s_TipsDict[m_State];
+                    tips.text = s_TipsDict[m_State];
                 }
+
                 break;
             case State.ShowLeft:
             case State.ShowRight:
@@ -266,10 +279,12 @@ public class ControlPanel : MonoBehaviour
                 {
                     OnCancel();
                     m_State = State.ShowCover;
-                    m_Tips.text = s_TipsDict[m_State];
+                    tips.text = s_TipsDict[m_State];
                 }
+
                 break;
         }
+
         Debug.Log($"{oldState} -({action})-> {m_State}");
     }
 
@@ -312,7 +327,7 @@ public class ControlPanel : MonoBehaviour
 
         RectTransform toSelected = action == Action.Left ? leftPanel.cover : rightPanel.cover;
         RectTransform toHidden = action == Action.Left ? rightPanel.cover : leftPanel.cover;
-        CanvasGroup panelToShow = action == Action.Left ? rightPanel.panel: leftPanel.panel;
+        CanvasGroup panelToShow = action == Action.Left ? rightPanel.panel : leftPanel.panel;
 
         Vector2 from = toSelected.sizeDelta;
         Vector2 to = Vector2.one * toSelected.rect.height - GetOriginSize(toSelected);
@@ -368,32 +383,65 @@ public class ControlPanel : MonoBehaviour
             rightPanel.techTree.techDetail.text = EarthModel.s_BuffDict[buffName].desc;
         }
     }
-    
+
+    private void InfoBarTint(Color colorTint, float duration, bool reverse)
+    {
+        var graphics = infoBar.root.GetComponentsInChildren<Graphic>();
+        foreach (var graphic in graphics)
+        {
+            graphic.CrossFadeColor(reverse ? Color.white : colorTint, duration, true, true);
+        }
+    }
+
+    public void OnImpact(bool benefit)
+    {
+        const float COLOR_TINT_DURATION = 0.05f;
+        Color colorTint = benefit ? infoBar.benefitColorTint : infoBar.loseColorTint;
+        InfoBarTint(colorTint, COLOR_TINT_DURATION, false);
+        DelayInvoke(COLOR_TINT_DURATION, () => InfoBarTint(colorTint, COLOR_TINT_DURATION, true));
+    }
+
+    private void DelayInvoke(float delay, System.Action func)
+    {
+        StartCoroutine(DelayInvoker(delay, func));
+    }
+
+    private IEnumerator DelayInvoker(float delay, System.Action func)
+    {
+        yield return new WaitForSeconds(delay);
+
+        func?.Invoke();
+    }
+
     public void UpdateTechInfo()
     {
-        if (m_State != State.ShowLeft)
-            return;
-
-        var techInfo = leftPanel.techInfo;
         var model = EarthModel.instance;
+        infoBar.energy.value = model.energy.limitedValue;
+        infoBar.energy.maxValue = model.energy.max;
+        infoBar.population.value = model.population.limitedValue;
+        infoBar.population.maxValue = model.population.max;
+        infoBar.tech.value = model.tech.limitedValue;
+        infoBar.tech.maxValue = model.tech.max;
 
-        techInfo.energy.total.text = $"{model.energy.value}/{model.energy.max}";
-        techInfo.energy.growth.text = $"{model.energy.growth}";
+        if (m_State == State.ShowLeft)
+        {
+            var techInfo = leftPanel.techInfo;
 
-        techInfo.population.total.text = $"{model.population.limitedValue}/{model.population.max}";
-        techInfo.population.growth.text = $"{model.population.growth}";
+            techInfo.energy.total.text = $"{model.energy.value}/{model.energy.max}";
+            techInfo.energy.growth.text = $"{model.energy.growth}";
 
-        techInfo.tech.total.text = $"{model.tech.value}/{model.tech.max}";
-        techInfo.tech.growth.text = $"{model.tech.growth}";
+            techInfo.population.total.text = $"{model.population.limitedValue}/{model.population.max}";
+            techInfo.population.growth.text = $"{model.population.growth}";
+
+            techInfo.tech.total.text = $"{model.tech.value}/{model.tech.max}";
+            techInfo.tech.growth.text = $"{model.tech.growth}";
+        }
     }
 
     // Update is called once per frame
     public void Update()
     {
-        if (m_State == State.ShowLeft)
-        {
-            UpdateTechInfo();
-        }
+        UpdateTechInfo();
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
