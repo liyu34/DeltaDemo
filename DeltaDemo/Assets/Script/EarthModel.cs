@@ -329,6 +329,9 @@ public class EarthModel : MonoBehaviour
 
     public void UpdateData()
     {
+        if (Main.instance.isPaused)
+            return;
+
         FloatPropery p = energy;
         p.value += energy.growth;
         energy = p;
