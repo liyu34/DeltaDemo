@@ -470,14 +470,18 @@ public class ControlPanel : MonoBehaviour
         {
             var techInfo = leftPanel.techInfo;
 
-            techInfo.energy.total.text = $"{model.energy.value}/{model.energy.max}";
-            techInfo.energy.growth.text = $"{model.energy.growth}";
+            string sign = "+";
+            techInfo.energy.total.text = $"动力能源：{model.energy.limitedValue}/{model.energy.max}";
+            sign = model.energy.growth > 0 ? "+" : "-";
+            techInfo.energy.growth.text = sign + $"{Mathf.Abs(model.energy.growth)} / s";
 
-            techInfo.population.total.text = $"{model.population.limitedValue}/{model.population.max}";
-            techInfo.population.growth.text = $"{model.population.growth}";
+            techInfo.population.total.text = $"人口数量：{model.population.limitedValue}/{model.population.max}";
+            sign = model.population.growth > 0 ? "+" : "-";
+            techInfo.population.growth.text = sign + $"{Mathf.Abs(model.population.growth)} / s";
 
-            techInfo.tech.total.text = $"{model.tech.value}/{model.tech.max}";
-            techInfo.tech.growth.text = $"{model.tech.growth}";
+            techInfo.tech.total.text = $"科研资源：{model.tech.limitedValue}/{model.tech.max}";
+            sign = model.tech.growth > 0 ? "+" : "-";
+            techInfo.tech.growth.text = sign + $"{Mathf.Abs(model.tech.growth)} / s";
         }
     }
 
