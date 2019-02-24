@@ -14,7 +14,15 @@ public class Main : MonoBehaviour
     public MeshRenderer bgMeshRenderer;
     public Material[] bgMaterials;
     public int failReason = 0;
+    public bool isPaused
+    {
+        get
+        {
+            return _gamePaused;
+        }
+    }
 
+    private bool _gamePaused = false;
     private bool isInRoom = false;
     private int curGalaxyNum = 0;
     private int curGalaxyLevel = 0;
@@ -64,6 +72,16 @@ public class Main : MonoBehaviour
         {
             return galaxyActiveList;
         }
+    }
+
+    public void PauseGame()
+    {
+        _gamePaused = true;
+    }
+
+    public void ResumeGame()
+    {
+        _gamePaused = false;
     }
 
     private void Awake()

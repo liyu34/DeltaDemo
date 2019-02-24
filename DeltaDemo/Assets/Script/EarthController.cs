@@ -24,6 +24,10 @@ public class EarthController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Main.instance.isPaused)
+        {
+            return;
+        }
         float deltaTime = Time.deltaTime;
         EndDistance -= deltaTime * _horizontalVelocity;
         if (EndDistance <= 0)
