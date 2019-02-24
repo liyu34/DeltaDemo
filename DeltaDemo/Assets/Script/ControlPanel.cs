@@ -174,8 +174,16 @@ public class ControlPanel : MonoBehaviour
 
     public InfoBar infoBar;
 
-    [SerializeField] private Text tips;
-    [SerializeField] private Slider progress;
+    [Serializable]
+    public struct StatusInfo
+    {
+        public Text currentGalaxyName;
+        public Text tips;
+        public Slider progress;
+    }
+
+    [SerializeField] private StatusInfo statusInfo;
+
     [SerializeField] private LeftPanel leftPanel;
     [SerializeField] private RightPanel rightPanel;
 
@@ -254,7 +262,7 @@ public class ControlPanel : MonoBehaviour
                 {
                     OnShow();
                     m_State = State.ShowCover;
-                    tips.text = s_TipsDict[m_State];
+                    statusInfo.tips.text = s_TipsDict[m_State];
                 }
 
                 break;
@@ -263,14 +271,14 @@ public class ControlPanel : MonoBehaviour
                 {
                     OnHide();
                     m_State = State.Hidden;
-                    tips.text = s_TipsDict[m_State];
+                    statusInfo.tips.text = s_TipsDict[m_State];
                 }
                 else if (action > Action.Enter)
                 {
                     OnEnter(action);
                     ;
                     m_State = action == Action.Left ? State.ShowLeft : State.ShowRight;
-                    tips.text = s_TipsDict[m_State];
+                    statusInfo.tips.text = s_TipsDict[m_State];
                 }
 
                 break;
@@ -280,7 +288,7 @@ public class ControlPanel : MonoBehaviour
                 {
                     OnCancel();
                     m_State = State.ShowCover;
-                    tips.text = s_TipsDict[m_State];
+                    statusInfo.tips.text = s_TipsDict[m_State];
                 }
 
                 break;
@@ -296,6 +304,11 @@ public class ControlPanel : MonoBehaviour
 
     [SerializeField] private float m_TransformAnimSpeed = 1f;
     [SerializeField] private float m_AlphaAnimSpeed = 1f;
+
+    public void OnEnterRoom()
+    {
+        statusInfo.currentGalaxyName.text = Constant.galaxyName[Main.instance.CurGalaxyNum];
+    }
 
     void OnShow()
     {
@@ -491,8 +504,8 @@ public class ControlPanel : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-        progress.value = Main.instance.EarthProgress();
-        progress.maxValue = 1f;
+        statusInfo.progress.value = Main.instance.EarthProgress();
+        statusInfo.progress.maxValue = 1f;
 
         UpdateTechInfo();
 

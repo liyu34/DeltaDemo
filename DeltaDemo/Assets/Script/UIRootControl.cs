@@ -50,6 +50,7 @@ public class UIRootControl : MonoBehaviour
         galaxyUI.SetActive(false);
         winPanel.SetActive(false);
         controlPanel.SetActive(true);
+        ControlPanel.instance.OnEnterRoom();
         losePanel.SetActive(false);
     }
 
