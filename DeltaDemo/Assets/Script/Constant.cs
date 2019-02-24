@@ -27,6 +27,8 @@ public static class Constant
 
     public static int[] galaxyLevelEndDistance = new int[10] { 315, 415, 415, 420, 515, 515, 550, 555, 555, 600 };
 
+    public static string[] galaxyName = new string[10] { "银河系", "水母座", "小恶魔座", "史莱姆座", "冰淇淋座", "天使座-前段", "流沙座", "天使座-后段", "草履虫座", "水晶座"};
+
     public static float ecoStarRadius = 5.008f;
     public static float surroundAngleSpeed = 55;
     public static float stopSurroundDelayTime = 1;
