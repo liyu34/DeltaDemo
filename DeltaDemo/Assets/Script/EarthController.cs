@@ -29,6 +29,12 @@ public class EarthController : MonoBehaviour
         if (EndDistance <= 0)
         {
             // win
+            UIRootControl.instance.winGame();
+            return;
+        }
+        if (_earthTransform.position.x <= -20)
+        {
+            UIRootControl.instance.loseGame();
             return;
         }
         if (_crossingBlackHole)

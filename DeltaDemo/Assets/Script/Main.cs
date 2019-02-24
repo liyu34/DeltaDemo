@@ -50,10 +50,6 @@ public class Main : MonoBehaviour
                 planetMove.speed = 0;
                 bgRemote.scrollSpeed = 0;
                 bgNear.scrollSpeed = 0;
-                if (posX <= -20)
-                {
-                    Debug.LogError("你已经离开边界");
-                }
             }
             else
             {
