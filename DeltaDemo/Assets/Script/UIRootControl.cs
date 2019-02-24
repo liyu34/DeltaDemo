@@ -7,6 +7,14 @@ public class UIRootControl : MonoBehaviour
     public GameObject galaxyUI;
     public GameObject winPanel;
     public GameObject controlPanel;
+    public GameObject losePanel;
+
+    public static UIRootControl instance { get; private set; }
+
+    public void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -18,13 +26,28 @@ public class UIRootControl : MonoBehaviour
         
     }
 
-    public void SetUIEnable(string uiName, bool isEnable)
+    public void openGalaxy()
     {
-        switch (uiName)
-        {
-            case ("Galaxy"):
-                galaxyUI.SetActive(isEnable);
-                break;
-        }
+        galaxyUI.SetActive(true);
+        winPanel.SetActive(false);
+        controlPanel.SetActive(false);
     }
+
+    public void enterRoom()
+    {
+        galaxyUI.SetActive(false);
+        winPanel.SetActive(false);
+        controlPanel.SetActive(true);
+    }
+
+    public void leaveRoom()
+    {
+        controlPanel.SetActive(false);
+    }
+    
+    public void winGame()
+    {
+        winPanel.SetActive(true);
+    }
+
 }

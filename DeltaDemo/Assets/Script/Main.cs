@@ -5,7 +5,6 @@ using UnityEngine;
 public class Main : MonoBehaviour
 {
     public GameObject planetRoot;
-    public UIRootControl uiRootControl;
     public EarthController earthController;
     public PlanetMove planetMove;
     public BackgroundScroller bgRemote;
@@ -37,7 +36,7 @@ public class Main : MonoBehaviour
 
     void Start()
     {
-        uiRootControl.SetUIEnable("Galaxy", true);
+        UIRootControl.instance.openGalaxy();
         earthController.gameObject.SetActive(false);
     }
 
@@ -79,11 +78,13 @@ public class Main : MonoBehaviour
     {
         isInRoom = true;
         earthController.gameObject.SetActive(true);
+        UIRootControl.instance.enterRoom();
     }
 
     public void LeaveRoom()
     {
         isInRoom = false;
         earthController.gameObject.SetActive(false);
+        UIRootControl.instance.leaveRoom();
     }
 }
