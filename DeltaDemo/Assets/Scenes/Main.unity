@@ -17755,6 +17755,7 @@ MonoBehaviour:
     population: {fileID: 971967466}
     tech: {fileID: 76291720}
   tips: {fileID: 668103322}
+  progress: {fileID: 1835025691}
   leftPanel:
     cover: {fileID: 375706533}
     panel: {fileID: 1466124613}
