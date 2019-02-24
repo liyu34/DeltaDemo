@@ -29,13 +29,21 @@ public class GalaxyUIControl : MonoBehaviour
     private int[] typeList;
     private bool[] hasSpawn;
 
-    private bool[] activleList;
+    private bool[] activeList;
     private int activeLevel = 0;
 
     void OnEnable()
     {
-        activleList = Main.instance.GalaxyActiveList;
+        activeList = Main.instance.GalaxyActiveList;
         activeLevel = Main.instance.CurGalaxyLevel;
+
+        for (int i = 0; i < 10; i++)
+        {
+            if (activeList[i])
+            {
+                galaxyOnImage[i].transform.GetChild(0).gameObject.SetActive(true);
+            }
+        }
 
         int firstNum = Constant.galaxyLevelFirstNum[activeLevel];
         int nextFirstNum = activeLevel == 4 ? 10 : Constant.galaxyLevelFirstNum[activeLevel + 1];
@@ -57,10 +65,17 @@ public class GalaxyUIControl : MonoBehaviour
 
         EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
         galaxyOnImage[firstNum].GetComponent<Button>().Select();
+        galaxyOnImage[firstNum].transform.GetChild(0).gameObject.SetActive(true);
     }
 
     public void OnSelectGalaxy(int galaxyType)
     {
+        galaxyOnImage[galaxyType].transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    public void OnUnselectGalaxy(int galaxyType)
+    {
+        galaxyOnImage[galaxyType].transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void OnEnterGalaxy(int galaxyType)
@@ -74,21 +89,21 @@ public class GalaxyUIControl : MonoBehaviour
             case 1:
             case 2:
             case 3:
-                canSelect = activleList[0];
+                canSelect = activeList[0];
                 break;
             case 4:
             case 5:
-                canSelect = activleList[0] && (activleList[1] || activleList[2] || activleList[3]);
+                canSelect = activeList[0] && (activeList[1] || activeList[2] || activeList[3]);
                 break;
             case 6:
             case 7:
             case 8:
-                canSelect = activleList[0] && (activleList[1] || activleList[2] || activleList[3])
-                            && (activleList[4] || activleList[5]);
+                canSelect = activeList[0] && (activeList[1] || activeList[2] || activeList[3])
+                            && (activeList[4] || activeList[5]);
                 break;
             case 9:
-                canSelect = activleList[0] && (activleList[1] || activleList[2] || activleList[3])
-                            && (activleList[4] || activleList[5]) && (activleList[6] || activleList[7] || activleList[8]);
+                canSelect = activeList[0] && (activeList[1] || activeList[2] || activeList[3])
+                            && (activeList[4] || activeList[5]) && (activeList[6] || activeList[7] || activeList[8]);
                 break;
         }
         if (canSelect)
