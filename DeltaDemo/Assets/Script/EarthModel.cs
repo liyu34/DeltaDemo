@@ -227,6 +227,7 @@ public class EarthModel : MonoBehaviour
         Debug.Log($"AddBuff {buffName}");
         buffList.Add(buffName, s_BuffDict[buffName]);
         ExecuteBuffEffects();
+        ControlPanel.instance.OnBuff(buffName);
     }
 
     public void RemoveBuff(string buffName)

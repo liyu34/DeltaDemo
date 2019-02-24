@@ -344,7 +344,17 @@ public class ControlPanel : MonoBehaviour
 
             if (m_State == State.ShowRight)
             {
-                EventSystem.current.SetSelectedGameObject(rightPanel.techTree.techMatrix.GetChild(0).gameObject);
+                var techMatrix = rightPanel.techTree.techMatrix;
+                for(int i = 0; i < techMatrix.childCount; ++i)
+                {
+                    var techItem = techMatrix.GetChild(i);
+                    bool isLearned = EarthModel.instance.buffList.ContainsKey(techItem.name);
+                    var learned = GameObject.Find($"{techItem.name}/unlearned");
+                    learned.GetComponent<Image>().enabled = !isLearned;
+                    var unlearned = GameObject.Find($"{techItem.name}/learned");
+                    unlearned.GetComponent<Image>().enabled = isLearned;
+                }
+                EventSystem.current.SetSelectedGameObject(techMatrix.GetChild(0).gameObject);
             }
         });
 
@@ -411,6 +421,18 @@ public class ControlPanel : MonoBehaviour
         yield return new WaitForSeconds(delay);
 
         func?.Invoke();
+    }
+
+    public void OnBuff(string buffName)
+    {
+        if (m_State == State.ShowRight)
+        {
+            var unlearned = GameObject.Find($"{buffName}/unlearned");
+            unlearned.GetComponent<Image>().enabled = false;
+            var learned = GameObject.Find($"{buffName}/learned");
+            learned.GetComponent<Image>().enabled = true;
+            Debug.Log($"{unlearned?.activeSelf}, {learned?.activeSelf}");
+        }
     }
 
     public void UpdateTechInfo()
