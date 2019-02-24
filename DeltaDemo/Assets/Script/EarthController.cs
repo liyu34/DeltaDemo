@@ -379,14 +379,17 @@ public class EarthController : MonoBehaviour
     {
         if (_earthTransform.position.x <= -20)
         {
+            Main.instance.failReason = 0;
             return true;
         }
         if (EarthModel.instance.energy.value <= 0)
         {
+            Main.instance.failReason = 1;
             return true;
         }
         if (EarthModel.instance.population.value <= 0)
         {
+            Main.instance.failReason = 2;
             return true;
         }
         return false;
