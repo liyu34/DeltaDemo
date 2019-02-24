@@ -69,7 +69,7 @@ public class Main : MonoBehaviour
 
     void Start()
     {
-        UIRootControl.instance.OpenGalaxy();
+        UIRootControl.instance.StartGame();
         earthController.gameObject.SetActive(false);
     }
 
@@ -101,6 +101,11 @@ public class Main : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void OpenGalaxy()
+    {
+        UIRootControl.instance.OpenGalaxy();
     }
 
     public void WinGame()

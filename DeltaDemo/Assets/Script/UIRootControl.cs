@@ -8,6 +8,7 @@ public class UIRootControl : MonoBehaviour
     public GameObject winPanel;
     public GameObject controlPanel;
     public GameObject losePanel;
+    public GameObject startPanel;
 
     public static UIRootControl instance { get; private set; }
 
@@ -26,12 +27,22 @@ public class UIRootControl : MonoBehaviour
         
     }
 
+    public void StartGame()
+    {
+        galaxyUI.SetActive(false);
+        winPanel.SetActive(false);
+        controlPanel.SetActive(false);
+        losePanel.SetActive(false);
+        startPanel.SetActive(true);
+    }
+
     public void OpenGalaxy()
     {
         galaxyUI.SetActive(true);
         winPanel.SetActive(false);
         controlPanel.SetActive(false);
         losePanel.SetActive(false);
+        startPanel.SetActive(false);
     }
 
     public void EnterRoom()
