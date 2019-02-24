@@ -458,6 +458,9 @@ public class ControlPanel : MonoBehaviour
 
     public void UpdateTechInfo()
     {
+        if (Main.instance.isPaused)
+            return;
+
         var model = EarthModel.instance;
         infoBar.energy.value = model.energy.limitedValue;
         infoBar.energy.maxValue = model.energy.max;
