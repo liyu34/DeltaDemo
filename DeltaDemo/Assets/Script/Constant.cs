@@ -25,7 +25,7 @@ public static class Constant
 
     public static int[] galaxyLevelFirstNum = new int[5] { 0, 1, 4, 6, 9 };
 
-    public static int[] galaxyLevelEndDistance = new int[9] { 315, 415, 415, 420, 515, 515, 550, 555, 555 };
+    public static int[] galaxyLevelEndDistance = new int[10] { 315, 415, 415, 420, 515, 515, 550, 555, 555, 600 };
 
     public static float ecoStarRadius = 5.008f;
     public static float surroundAngleSpeed = 55;
