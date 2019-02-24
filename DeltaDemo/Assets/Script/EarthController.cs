@@ -25,6 +25,12 @@ public class EarthController : MonoBehaviour
     void Update()
     {
         float deltaTime = Time.deltaTime;
+        EndDistance -= deltaTime * _horizontalVelocity;
+        if (EndDistance <= 0)
+        {
+            // win
+            return;
+        }
         if (_crossingBlackHole)
         {
             _stayInBlackHoleTime += deltaTime;
@@ -368,7 +374,19 @@ public class EarthController : MonoBehaviour
             return _horizontalVelocity;
         }
     }
+    public float EndDistance
+    {
+        set
+        {
+            _endDistance = value;
+        }
+        get
+        {
+            return _endDistance;
+        }
+    }
 
+    private float _endDistance = 20f;
     private GameObject _crashPlanetTempl;
     private List<CrashedPlanet> _crashedPlanets;
     private List<GameObject> _planetsCache;
