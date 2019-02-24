@@ -19,6 +19,10 @@ public class BackgroundScroller : MonoBehaviour
 
     void Update()
     {
+        if (Main.instance.isPaused)
+        {
+            return;
+        }
         float newPositionOffset = Mathf.Repeat(Time.deltaTime * scrollSpeed + lastPositionOffset, widthSize);
         transform.position = startPosition + Vector3.right * newPositionOffset;
         lastPositionOffset = newPositionOffset;
