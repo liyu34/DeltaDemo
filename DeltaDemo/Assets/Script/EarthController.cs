@@ -25,6 +25,16 @@ public class EarthController : MonoBehaviour
     void Update()
     {
         float deltaTime = Time.deltaTime;
+        if (_crossingBlackHole)
+        {
+            _stayInBlackHoleTime += deltaTime;
+            _verticalVelocity = 0;
+            float horSpeedPercent = blackHoleSpeed.Evaluate(_stayInBlackHoleTime);
+            _horizontalVelocity = horSpeedPercent * _enterBlackHoleHorSpeed;
+            _SetEarthPosition();
+            _SetFlame();
+            return;
+        }
         if (_horizontalVelocity > Constant.maxHorizontalVelocity)
         {
             _horizontalVelocity -= deltaTime * Constant.overMaxHVelocityDecreaseDelta;
@@ -184,7 +194,12 @@ public class EarthController : MonoBehaviour
             }
             else if( other.gameObject.tag == "Blackhole")
             {
-                _crossingBlackHole = true;
+                if (!_crossingBlackHole)
+                {
+                    _crossingBlackHole = true;
+                    _enterBlackHoleHorSpeed = _horizontalVelocity;
+                    _stayInBlackHoleTime = 0.0f;
+                }
             }
             else
             {
@@ -198,6 +213,7 @@ public class EarthController : MonoBehaviour
         if (other.gameObject.tag == "Blackhole")
         {
             _crossingBlackHole = false;
+            _stayInBlackHoleTime = 0.0f;
         }
     }
 
@@ -323,6 +339,7 @@ public class EarthController : MonoBehaviour
     }
 
     public AnimationCurve _curve;
+    public AnimationCurve blackHoleSpeed;
     public float xBound = -10f;
     public float mapBound = 8.5f;
     public float maxFlameSpeed = 3;
@@ -344,6 +361,8 @@ public class EarthController : MonoBehaviour
     private float _afterStopKeepVelocityDelay = 0;
     private int _afterStopKeepVerticalDirection = 1;
     private bool _crossingBlackHole = false;
+    private float _stayInBlackHoleTime = 0.0f;
+    private float _enterBlackHoleHorSpeed = 0f;
     private GameObject _surroundingStar;
     private bool _surroundState = false;
     private float _surroundAngle;
