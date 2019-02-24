@@ -38,15 +38,23 @@ public class GalaxyUIControl : MonoBehaviour
         activeLevel = Main.instance.CurGalaxyLevel;
 
         int firstNum = Constant.galaxyLevelFirstNum[activeLevel];
-        if (activeLevel != 4)
-        {
-            int nextFirstNum = Constant.galaxyLevelFirstNum[activeLevel + 1];
+        int nextFirstNum = activeLevel == 4 ? 10 : Constant.galaxyLevelFirstNum[activeLevel + 1];
 
-            for (int i = nextFirstNum; i < 10; i++)
-            {
-                galaxyOnImage[i].GetComponent<Button>().interactable = false;
-            }
+        for (int i = 0; i < firstNum; i++)
+        {
+            galaxyOnImage[i].GetComponent<Button>().interactable = false;
         }
+
+        for (int i = firstNum; i < nextFirstNum; i++)
+        {
+            galaxyOnImage[i].GetComponent<Button>().interactable = true;
+        }
+
+        for (int i = nextFirstNum; i < 10; i++)
+        {
+            galaxyOnImage[i].GetComponent<Button>().interactable = false;
+        }
+
         EventSystem.current.SetSelectedGameObject(galaxyOnImage[firstNum]);
         galaxyOnImage[firstNum].GetComponent<Button>().Select();
     }

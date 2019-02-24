@@ -104,6 +104,7 @@ public class Main : MonoBehaviour
 
     public void WinGame()
     {
+        LeaveRoom();
         galaxyActiveList[CurGalaxyNum] = true;
         CurGalaxyLevel++;
         UIRootControl.instance.OpenGalaxy();
@@ -111,6 +112,7 @@ public class Main : MonoBehaviour
 
     public void LoseGame()
     {
+        LeaveRoom();
         UIRootControl.instance.OpenGalaxy();
     }
 
