@@ -101,16 +101,16 @@ public class EarthModel
                 p.growth += buff.effect;
                 model.population = p;
             }),
-            new FloatBuff("速度增速 {0:P}", -.5f, (model, buff) => {
+            new FloatBuff("速度加成 {0:P}", -.5f, (model, buff) => {
                 var p = model.velocity;
-                p.value *= 1 + buff.effect;
+                p.value += buff.effect;
                 model.velocity = p;
             })
         ),
         new Buff("SpeedUp", 
-            new FloatBuff("速度 {0:P}", .1f, (model, buff) => {
+            new FloatBuff("速度加成 {0:P}", .1f, (model, buff) => {
                 var p = model.velocity;
-                p.value *= 1 + buff.effect;
+                p.value += buff.effect;
                 model.velocity = p;
             })
         ),
