@@ -127,6 +127,8 @@ public class EarthController : MonoBehaviour
         _earthTransform.position = new Vector3(-10, 0, 5);
         _horizontalVelocity = Constant.initialHorizontalVelocity;
         _verticalVelocity = 0;
+        _crossingBlackHole = false;
+        _surroundState = false;
     }
 
     private Vector2 _HandleInput()
